@@ -4,9 +4,9 @@ import java.sql.Date;
 
 
 	public  class ArtistInfo {
-		int no;
-		String artist;
-		String realName;
-		Date bornDate;
+		public int no;
+		public String artist;
+		public String realName;
+		public Date bornDate;
 	}
 

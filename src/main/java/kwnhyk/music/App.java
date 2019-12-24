@@ -17,7 +17,11 @@ public class App {
 	public static void main(String[] args) {
 		MusicHandler.keyboard = keyboard;
 		ArtistHandler.keyboard = keyboard;
-
+		MusicHandler musicHandler = new MusicHandler();
+		MusicHandler musicHandler2 = new MusicHandler();
+		ArtistHandler artistHandler = new ArtistHandler();
+		ArtistHandler artistHandler2 = new ArtistHandler();
+		
 		String command ;
 
 		do{
@@ -26,24 +30,36 @@ public class App {
 
 			switch (command){
 			case "/music/add":
-				MusicHandler.addMusic();
+				MusicHandler.addMusic(musicHandler);
 
 				// 정보를 담고 있는 인스턴스의 주소를 나중에 사용할 수 있도록
 				// 레퍼런스 배열에 보관해 둔다.
 				break;
 			case "/music/list":
-				MusicHandler.listMusic();
+				MusicHandler.listMusic(musicHandler);
 
 
 				break;
+			case "/music2/add":
+				MusicHandler.listMusic(musicHandler2);
+				break;
+			case "/music2/list":
+				MusicHandler.listMusic(musicHandler2);
+				break;
+
 			case "/artist/add":
-				ArtistHandler.addArtist();
+				ArtistHandler.addArtist(artistHandler);
 				break;
-
 			case"/artist/list":
-				ArtistHandler.listArtist();
+				ArtistHandler.listArtist(artistHandler);
 				break;
-
+			case "/artist2/add":
+				ArtistHandler.addArtist(artistHandler2);
+				break;
+			
+			case"/artist2/list":
+				ArtistHandler.listArtist(artistHandler2);
+				break;
 			default:
 				if(!command.equalsIgnoreCase("quit")){
 					System.out.println("실행할 수 없는 명령입니다.");

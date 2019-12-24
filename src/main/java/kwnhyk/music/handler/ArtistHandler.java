@@ -3,29 +3,25 @@ package kwnhyk.music.handler;
 import java.sql.Date;
 import java.util.Scanner;
 
+import kwnhyk.music.domain.ArtistInfo;
+
 public class ArtistHandler {
 
-	static  class ArtistInfo {
-		int no;
-		String artist;
-		String realName;
-		Date bornDate;
-	}
-
+	
 	final static int ARTIST_SIZE = 100;
-	static ArtistInfo [] artists = new ArtistInfo[ARTIST_SIZE];
+	 ArtistInfo [] artists = new ArtistInfo[ARTIST_SIZE];
 
-	static int artistCount = 0;
+	 int artistCount = 0;
 	public static Scanner keyboard ;
-	public static void listArtist() {
-		for (int i = 0; i < artistCount; i++) {
-			ArtistInfo a = artists[i];
+	public static void listArtist(ArtistHandler artisthandler) {
+		for (int i = 0; i < artisthandler.artistCount; i++) {
+			ArtistInfo a = artisthandler.artists[i];
 			System.out.printf("%d, %s, %s, %s\n", 
 					a.no, a.artist, a.realName, a.bornDate);
 		}
 	}
 
-	public static void addArtist() {
+	public static void addArtist(ArtistHandler artisthandler) {
 		ArtistInfo artist = new ArtistInfo();
 		System.out.print("번호? ");
 		artist.no = keyboard.nextInt();
@@ -43,7 +39,7 @@ public class ArtistHandler {
 		artist.bornDate= Date.valueOf(keyboard.next());
 		keyboard.nextLine(); 
 
-		artists[artistCount++]=artist;
+		artisthandler.artists[artisthandler.artistCount++]=artist;
 		System.out.println("저장하였습니다");
 
 	}
