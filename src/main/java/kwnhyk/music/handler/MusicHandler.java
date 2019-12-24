@@ -9,13 +9,13 @@ public class MusicHandler {
 
 	final static int  MUSIC_SIZE = 100;
 	// Lesson 인스턴스 주소를 담을 레퍼런스 배열을 만든다.
-	static MusicInfo[] musics = new MusicInfo[MUSIC_SIZE];
-	static int musicCount = 0;
+	 MusicInfo[] musics = new MusicInfo[MUSIC_SIZE];
+	 int musicCount = 0;
 	public static Scanner keyboard;
 	
-	public static void listMusic() {
-		for (int i = 0; i < musicCount; i++) {
-			MusicInfo m = musics[i];
+	public static void listMusic(MusicHandler musicHandler) {
+		for (int i = 0; i <musicHandler.musicCount; i++) {
+			MusicInfo m = musicHandler.musics[i];
 
 			System.out.printf("%d, %s, %s , %s,%s,%d\n",
 					m.no, m.title,
@@ -24,7 +24,7 @@ public class MusicHandler {
 					);
 		}
 	}
-	public static void addMusic(){
+	public static void addMusic(MusicHandler musicHandler){
 			MusicInfo music = new MusicInfo();
 
 			System.out.print("번호? ");
@@ -49,7 +49,7 @@ public class MusicHandler {
 
 			keyboard.nextLine(); //  출시일 입력 값 다음에 남아 있는 줄바꿈 값 제거
 
-			musics[musicCount++] = music;
+			musicHandler.musics[musicHandler.musicCount++] = music;
 			System.out.println("저장하였습니다");
 		}
 
