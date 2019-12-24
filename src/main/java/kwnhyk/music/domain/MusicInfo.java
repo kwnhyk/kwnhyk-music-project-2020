@@ -1,12 +1,12 @@
 package kwnhyk.music.domain;
 
 public class MusicInfo {
-	int no;
-	String title;
-	String artist;
+	public int no;
+	public String title;
+	public String artist;
 
-	String writer;
-	String genre;
-	int startDate;
+	public String writer;
+	public String genre;
+	public int startDate;
 
 }
