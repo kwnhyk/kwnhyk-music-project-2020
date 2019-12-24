@@ -19,9 +19,9 @@ public class MusicHandler {
 	// Lesson 인스턴스 주소를 담을 레퍼런스 배열을 만든다.
 	static MusicInfo[] musics = new MusicInfo[MUSIC_SIZE];
 	static int musicCount = 0;
-	static Scanner keyboard;
+	 static Scanner keyboard;
 	
-	static void listMusic() {
+	 static void listMusic() {
 		for (int i = 0; i < musicCount; i++) {
 			MusicInfo m = musics[i];
 
@@ -32,7 +32,7 @@ public class MusicHandler {
 					);
 		}
 	}
-		static void addMusic(){
+		 static void addMusic(){
 			MusicInfo music = new MusicInfo();
 
 			System.out.print("번호? ");
