@@ -1,4 +1,4 @@
-package kwnhyk.music;
+package kwnhyk.music.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -16,8 +16,8 @@ public class ArtistHandler {
 	static ArtistInfo [] artists = new ArtistInfo[ARTIST_SIZE];
 
 	static int artistCount = 0;
-	 static Scanner keyboard ;
-	 static void listArtist() {
+	public static Scanner keyboard ;
+	public static void listArtist() {
 		for (int i = 0; i < artistCount; i++) {
 			ArtistInfo a = artists[i];
 			System.out.printf("%d, %s, %s, %s\n", 
@@ -25,7 +25,7 @@ public class ArtistHandler {
 		}
 	}
 
-	 static void addArtist() {
+	public static void addArtist() {
 		ArtistInfo artist = new ArtistInfo();
 		System.out.print("번호? ");
 		artist.no = keyboard.nextInt();

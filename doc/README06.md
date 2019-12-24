@@ -1,0 +1,40 @@
+# 버전8 - 패키지로 클래스를 분류하기
+
+##  목표
+
+- 패키지를 이용하여 역할에 따라 클래스를 분류할 수 있다.
+
+## 실습 소스 및 결과
+
+- kwnhyk.music.handler 패키지 추가
+- src/main/java/kwnhyk/music/handler/MusicHandler.java 변경
+- src/main/java/kwnhyk/music/handler/ArtistHandler.java 변경
+
+- kwnhyk.music.domain 패키지 추가
+- src/main/java/kwnhyk/music/domain/MusicInfo.java 변경
+- src/main/java/kwnhyk/music/domain/ArtistInfo.java 변경
+- 
+- src/main/java/kwnhyk/music/App.java 변경
+
+## 실습
+
+### 작업1) 데이터 타입 클래스를 별도의 패키지로 분류하라.
+
+- 도메인 패키지 생성
+    - `kwnhyk.music.domain` 패키지 생성
+- 도메인 클래스를 `domain` 패키지로 이동
+    - `Music`, `Artist`클래스를 `kwnhyk.music.domain` 패키지로 옮긴다.
+    - 다른 패키지에서 변수에 접근할 수 있도록 접근 제어를 `public` 으로 변경
+- 핸들러 클래스에 import 문 추가
+    - `MusicHandler`, `ArtistHandler` 클래스를 변경한다.
+
+
+### 작업2) 사용자 명령을 처리하는 클래스를 별도의 패키지로 분류하라.
+
+- 핸들러 패키지 생성
+    - `kwnhyk.music.handler` 패키지 생성
+- 핸들러 클래스를 `handler` 패키지로 이동
+    - `MusicHandler`, `ArtistHandler` 클래스를 `kwnhyk.music.handler` 패키지로 옮긴다.
+    - 다른 패키지에서 변수에 접근할 수 있도록 접근 제어를 `public` 으로 변경
+- App.java 변경
+    - 핸들러 클래스에 대해 import 문 추가

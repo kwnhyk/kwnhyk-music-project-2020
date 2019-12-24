@@ -3,6 +3,9 @@ package kwnhyk.music;
 
 import java.util.Scanner;
 
+import kwnhyk.music.handler.ArtistHandler;
+import kwnhyk.music.handler.MusicHandler;
+
 
 
 public class App {
