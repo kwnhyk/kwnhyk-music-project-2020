@@ -4,6 +4,7 @@ package kwnhyk.music;
 import java.util.Scanner;
 
 import kwnhyk.music.handler.ArtistHandler;
+import kwnhyk.music.handler.BoardHandler;
 import kwnhyk.music.handler.MusicHandler;
 
 
@@ -17,10 +18,13 @@ public class App {
 	public static void main(String[] args) {
 		MusicHandler.keyboard = keyboard;
 		ArtistHandler.keyboard = keyboard;
+		BoardHandler.keyboard = keyboard;
 		MusicHandler musicHandler = new MusicHandler();
 		MusicHandler musicHandler2 = new MusicHandler();
 		ArtistHandler artistHandler = new ArtistHandler();
 		ArtistHandler artistHandler2 = new ArtistHandler();
+		BoardHandler boardHandler = new BoardHandler();
+		
 		
 		String command ;
 
@@ -60,9 +64,16 @@ public class App {
 			case"/artist2/list":
 				ArtistHandler.listArtist(artistHandler2);
 				break;
+			case "/board/add":
+				BoardHandler.addBoard(boardHandler);
+				break;
+			case "/board/list":
+				BoardHandler.listBoard(boardHandler);
+				break;
 			default:
 				if(!command.equalsIgnoreCase("quit")){
 					System.out.println("실행할 수 없는 명령입니다.");
+					
 				}
 			}
 		}while(!command.equalsIgnoreCase("quit"));
