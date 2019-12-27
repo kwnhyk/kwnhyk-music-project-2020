@@ -11,11 +11,11 @@ public class MusicHandler {
 	// Lesson 인스턴스 주소를 담을 레퍼런스 배열을 만든다.
 	 MusicInfo[] musics = new MusicInfo[MUSIC_SIZE];
 	 int musicCount = 0;
-	public static Scanner keyboard;
+	public static Scanner input;
 	
-	public static void listMusic(MusicHandler musicHandler) {
-		for (int i = 0; i <musicHandler.musicCount; i++) {
-			MusicInfo m = musicHandler.musics[i];
+	public  void listMusic( ) {
+		for (int i = 0; i <this.musicCount; i++) {
+			MusicInfo m = this.musics[i];
 
 			System.out.printf("%d, %s, %s , %s,%s,%d\n",
 					m.no, m.title,
@@ -24,32 +24,32 @@ public class MusicHandler {
 					);
 		}
 	}
-	public static void addMusic(MusicHandler musicHandler){
+	public  void addMusic(){
 			MusicInfo music = new MusicInfo();
 
 			System.out.print("번호? ");
-			music.no = keyboard.nextInt();
+			music.no = input.nextInt();
 
-			keyboard.nextLine(); // nextInt() 후에 남아 있는 줄바꿈 기호를 제거한다.
+			input.nextLine(); // nextInt() 후에 남아 있는 줄바꿈 기호를 제거한다.
 
 			System.out.print("음악제목? ");
-			music.title = keyboard.nextLine();
+			music.title = input.nextLine();
 
 			System.out.print("아티스트명? ");
-			music.artist = keyboard.nextLine();
+			music.artist = input.nextLine();
 			System.out.print("작곡가? ");
-			music.writer = keyboard.nextLine();
+			music.writer = input.nextLine();
 			System.out.print("장르? ");
-			music.genre = keyboard.nextLine();
+			music.genre = input.nextLine();
 
 			System.out.print("출시일? ");
 
-			music.startDate = keyboard.nextInt();
+			music.startDate = input.nextInt();
 
 
-			keyboard.nextLine(); //  출시일 입력 값 다음에 남아 있는 줄바꿈 값 제거
+			input.nextLine(); //  출시일 입력 값 다음에 남아 있는 줄바꿈 값 제거
 
-			musicHandler.musics[musicHandler.musicCount++] = music;
+			this.musics[this.musicCount++] = music;
 			System.out.println("저장하였습니다");
 		}
 
