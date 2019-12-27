@@ -16,9 +16,9 @@ public class App {
 
 
 	public static void main(String[] args) {
-		MusicHandler.keyboard = keyboard;
-		ArtistHandler.keyboard = keyboard;
-		BoardHandler.keyboard = keyboard;
+		MusicHandler.input = keyboard;
+		ArtistHandler.input = keyboard;
+		BoardHandler.input = keyboard;
 		MusicHandler musicHandler = new MusicHandler();
 		MusicHandler musicHandler2 = new MusicHandler();
 		ArtistHandler artistHandler = new ArtistHandler();
@@ -34,41 +34,41 @@ public class App {
 
 			switch (command){
 			case "/music/add":
-				MusicHandler.addMusic(musicHandler);
+				musicHandler.addMusic();
 
 				// 정보를 담고 있는 인스턴스의 주소를 나중에 사용할 수 있도록
 				// 레퍼런스 배열에 보관해 둔다.
 				break;
 			case "/music/list":
-				MusicHandler.listMusic(musicHandler);
+				musicHandler.listMusic();
 
 
 				break;
 			case "/music2/add":
-				MusicHandler.listMusic(musicHandler2);
+				musicHandler2.listMusic();
 				break;
 			case "/music2/list":
-				MusicHandler.listMusic(musicHandler2);
+				musicHandler2.listMusic();
 				break;
 
 			case "/artist/add":
-				ArtistHandler.addArtist(artistHandler);
+				artistHandler.addArtist();
 				break;
 			case"/artist/list":
-				ArtistHandler.listArtist(artistHandler);
+				artistHandler.listArtist();
 				break;
 			case "/artist2/add":
-				ArtistHandler.addArtist(artistHandler2);
+				artistHandler2.addArtist();
 				break;
 			
 			case"/artist2/list":
-				ArtistHandler.listArtist(artistHandler2);
+				artistHandler2.listArtist();
 				break;
 			case "/board/add":
-				BoardHandler.addBoard(boardHandler);
+				boardHandler.addBoard();
 				break;
 			case "/board/list":
-				BoardHandler.listBoard(boardHandler);
+				boardHandler.listBoard();
 				break;
 			default:
 				if(!command.equalsIgnoreCase("quit")){
