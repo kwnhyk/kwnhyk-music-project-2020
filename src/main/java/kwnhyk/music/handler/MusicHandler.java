@@ -2,6 +2,7 @@ package kwnhyk.music.handler;
 
 import java.util.Scanner;
 
+
 import kwnhyk.music.domain.MusicInfo;
 
 public class MusicHandler {
@@ -9,10 +10,13 @@ public class MusicHandler {
 
 	final static int  MUSIC_SIZE = 100;
 	// Lesson 인스턴스 주소를 담을 레퍼런스 배열을 만든다.
-	 MusicInfo[] musics = new MusicInfo[MUSIC_SIZE];
+	 MusicInfo[] musics ;
 	 int musicCount = 0;
-	public static Scanner input;
-	
+	public  Scanner input;
+	public MusicHandler(Scanner input) {
+		this.input = input;
+		 this.musics = new MusicInfo[MUSIC_SIZE];
+	}
 	public  void listMusic( ) {
 		for (int i = 0; i <this.musicCount; i++) {
 			MusicInfo m = this.musics[i];
