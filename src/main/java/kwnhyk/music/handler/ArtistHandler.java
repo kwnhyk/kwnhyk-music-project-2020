@@ -9,11 +9,14 @@ public class ArtistHandler {
 
 	
 	final static int ARTIST_SIZE = 100;
-	 ArtistInfo [] artists =  new ArtistInfo[ARTIST_SIZE];
+	 ArtistInfo [] artists ;
 
 	 int artistCount = 0;
-	public static Scanner input ;
-	
+	public  Scanner input ;
+	public ArtistHandler(Scanner input) {
+		this.input = input;
+		 this.artists = new ArtistInfo[ARTIST_SIZE];
+	}
 	public  void listArtist() {
 		for (int i = 0; i < this.artistCount; i++) {
 			ArtistInfo a = this.artists[i];

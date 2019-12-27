@@ -16,14 +16,11 @@ public class App {
 
 
 	public static void main(String[] args) {
-		MusicHandler.input = keyboard;
-		ArtistHandler.input = keyboard;
-		BoardHandler.input = keyboard;
-		MusicHandler musicHandler = new MusicHandler();
-		MusicHandler musicHandler2 = new MusicHandler();
-		ArtistHandler artistHandler = new ArtistHandler();
-		ArtistHandler artistHandler2 = new ArtistHandler();
-		BoardHandler boardHandler = new BoardHandler();
+		MusicHandler musicHandler = new MusicHandler(keyboard);
+		MusicHandler musicHandler2 = new MusicHandler(keyboard);
+		ArtistHandler artistHandler = new ArtistHandler(keyboard);
+		ArtistHandler artistHandler2 = new ArtistHandler(keyboard);
+		BoardHandler boardHandler = new BoardHandler(keyboard);
 		
 		
 		String command ;

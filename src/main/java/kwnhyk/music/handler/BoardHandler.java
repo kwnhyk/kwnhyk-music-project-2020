@@ -2,25 +2,19 @@ package kwnhyk.music.handler;
 
 import java.util.Scanner;
 
+
 import kwnhyk.music.domain.BoardInfo;
 
 public class BoardHandler {
 	final static int BOARD_SIZE = 100;
 	 int boardCount= 0;
-	public static Scanner input ;
-	 BoardInfo[] boards = new BoardInfo[BOARD_SIZE];
+	public  Scanner input ;
+	 BoardInfo[] boards ;
 	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		
-		
-		
-		
-
-	}
-
+	 public BoardHandler(Scanner input) {
+			this.input = input;
+			 this.boards = new BoardInfo[BOARD_SIZE];
+		}
 	
 	public   void addBoard( ) {
 		
