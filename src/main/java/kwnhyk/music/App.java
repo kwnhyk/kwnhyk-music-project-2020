@@ -33,8 +33,7 @@ public class App {
 			case "/music/add":
 				musicHandler.addMusic();
 
-				// 정보를 담고 있는 인스턴스의 주소를 나중에 사용할 수 있도록
-				// 레퍼런스 배열에 보관해 둔다.
+				
 				break;
 			case "/music/list":
 				musicHandler.listMusic();
