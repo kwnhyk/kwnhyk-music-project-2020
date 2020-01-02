@@ -22,9 +22,9 @@ public class MusicHandler {
 			MusicInfo m = this.musics[i];
 
 			System.out.printf("%d, %s, %s , %s,%s,%d\n",
-					m.no, m.title,
-					m.artist, m.genre,m.writer,
-					m.startDate
+					m.getNo(), m.getTitle(),
+					m.getArtist(), m.getGenre(), m.getWriter(),
+					m.getStartDate()
 					);
 		}
 	}
@@ -32,23 +32,23 @@ public class MusicHandler {
 			MusicInfo music = new MusicInfo();
 
 			System.out.print("번호? ");
-			music.no = input.nextInt();
+			music.setNo(input.nextInt());
 
 			input.nextLine(); // nextInt() 후에 남아 있는 줄바꿈 기호를 제거한다.
 
 			System.out.print("음악제목? ");
-			music.title = input.nextLine();
+			music.setTitle(input.nextLine());
 
 			System.out.print("아티스트명? ");
-			music.artist = input.nextLine();
+			music.setArtist(input.nextLine());
 			System.out.print("작곡가? ");
-			music.writer = input.nextLine();
+			music.setWriter(input.nextLine());
 			System.out.print("장르? ");
-			music.genre = input.nextLine();
+			music.setGenre(input.nextLine());
 
 			System.out.print("출시일? ");
 
-			music.startDate = input.nextInt();
+			music.setStartDate(input.nextInt());
 
 
 			input.nextLine(); //  출시일 입력 값 다음에 남아 있는 줄바꿈 값 제거

@@ -1,12 +1,60 @@
 package kwnhyk.music.domain;
 
 public class MusicInfo {
-	public int no;
-	public String title;
-	public String artist;
+	private int no;
+	private String title;
+	private String artist;
 
-	public String writer;
-	public String genre;
-	public int startDate;
+	private String writer;
+	private String genre;
+	private int startDate;
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getArtist() {
+		return artist;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public int getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(int startDate) {
+		this.startDate = startDate;
+	}
 
 }
