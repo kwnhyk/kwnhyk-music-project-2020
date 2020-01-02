@@ -2,24 +2,28 @@ package kwnhyk.music.handler;
 
 import java.util.Scanner;
 
-
 import kwnhyk.music.domain.MusicInfo;
+
+
+
 
 public class MusicHandler {
 
+	MusicList musicList;
 
-	final static int  MUSIC_SIZE = 100;
-	// Lesson 인스턴스 주소를 담을 레퍼런스 배열을 만든다.
-	 MusicInfo[] musics ;
-	 int musicCount = 0;
-	public  Scanner input;
+	  Scanner input;
 	public MusicHandler(Scanner input) {
 		this.input = input;
-		 this.musics = new MusicInfo[MUSIC_SIZE];
+		this.musicList = new MusicList();
+	}
+	public MusicHandler(Scanner input,int capacity) {
+		this.input = input;
+		this.musicList = new MusicList(capacity);
 	}
 	public  void listMusic( ) {
-		for (int i = 0; i <this.musicCount; i++) {
-			MusicInfo m = this.musics[i];
+		MusicInfo[] list = this.musicList.toArray();
+		for(MusicInfo m : list)
+	
 
 			System.out.printf("%d, %s, %s , %s,%s,%d\n",
 					m.getNo(), m.getTitle(),
@@ -27,7 +31,7 @@ public class MusicHandler {
 					m.getStartDate()
 					);
 		}
-	}
+	
 	public  void addMusic(){
 			MusicInfo music = new MusicInfo();
 
@@ -52,8 +56,8 @@ public class MusicHandler {
 
 
 			input.nextLine(); //  출시일 입력 값 다음에 남아 있는 줄바꿈 값 제거
-
-			this.musics[this.musicCount++] = music;
+			this.musicList.add(music);
+			
 			System.out.println("저장하였습니다");
 		}
 

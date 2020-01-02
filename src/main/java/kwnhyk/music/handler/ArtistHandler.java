@@ -5,28 +5,27 @@ import java.util.Scanner;
 
 import kwnhyk.music.domain.ArtistInfo;
 
+
 public class ArtistHandler {
 
 	
-	final static int ARTIST_SIZE = 100;
-	 ArtistInfo [] artists ;
+	ArtistList artistList;
 
-	 int artistCount = 0;
-	public  Scanner input ;
+	  Scanner input ;
 	public ArtistHandler(Scanner input) {
 		this.input = input;
-		 this.artists = new ArtistInfo[ARTIST_SIZE];
+		 this.artistList = new ArtistList();
 	}
 	public  void listArtist() {
-		for (int i = 0; i < this.artistCount; i++) {
-			ArtistInfo a = this.artists[i];
+		ArtistInfo[] artists = artistList.toArray();
+			for(ArtistInfo a : artists)
 			System.out.printf("%d, %s, %s, %s\n", 
 					a.getNo(), a.getArtist(), a.getRealName(), a.getBornDate());
 		}
-	}
+	
 
 	public  void addArtist() {
-		ArtistInfo artist = new ArtistInfo();
+ 		ArtistInfo artist = new ArtistInfo();
 		System.out.print("번호? ");
 		artist.setNo(input.nextInt());
 		input.nextLine(); // 줄바꿈 기호 제거용
@@ -42,8 +41,9 @@ public class ArtistHandler {
 		// "yyyy-MM-dd" 형태로 입력된 문자열을 날짜 정보로 바꾼다.
 		artist.setBornDate(Date.valueOf(input.next()));
 		input.nextLine(); 
+		artistList.add(artist);
+		//this.artists[this.artistCount++]=artist;
 
-		this.artists[this.artistCount++]=artist;
 		System.out.println("저장하였습니다");
 
 	}
