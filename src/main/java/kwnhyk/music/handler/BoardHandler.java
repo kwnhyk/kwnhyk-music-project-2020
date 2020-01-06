@@ -6,14 +6,11 @@ import java.util.Scanner;
 import kwnhyk.music.domain.BoardInfo;
 
 public class BoardHandler {
-	final static int BOARD_SIZE = 100;
-	 int boardCount= 0;
 	  Scanner input ;
-	 BoardInfo[] boards ;
-	
+	ArrayList boardList;
 	 public BoardHandler(Scanner input) {
 			this.input = input;
-			 this.boards = new BoardInfo[BOARD_SIZE];
+			 this.boardList = new ArrayList();
 		}
 	
 	public   void addBoard( ) {
@@ -27,16 +24,18 @@ public class BoardHandler {
 	  System.out.println("제목>");
 	  board.setTitle(input.nextLine());
 	  System.out.println("내용>");
-	  	board.setContents(input.nextLine());
-	  this.boards[this.boardCount] = board;
-	  this.boardCount ++;
+		  board.setContents(input.nextLine());
+		  
+		  boardList.add(board);
 	  System.out.println("저장");
 	  
 	}
 	
 	public  void listBoard() {
-		for(int i=0 ; i<this.boardCount;i++) {
-		BoardInfo b = this.boards[i];
+		Object[] boards = boardList.toArray();
+
+		for(Object obj : boards) {
+			BoardInfo b = (BoardInfo)obj;
 		System.out.printf("%d %s %s ", b.getNum(), b.getTitle(), b.getContents());
 		
 		
