@@ -9,20 +9,22 @@ import kwnhyk.music.domain.ArtistInfo;
 public class ArtistHandler {
 
 	
-	ArtistList artistList;
+	ArrayList artistList;
 
 	  Scanner input ;
 	public ArtistHandler(Scanner input) {
 		this.input = input;
-		 this.artistList = new ArtistList();
+		 this.artistList = new ArrayList();
 	}
 	public  void listArtist() {
-		ArtistInfo[] artists = artistList.toArray();
-			for(ArtistInfo a : artists)
+		Object[] objs = artistList.toArray();
+			for(Object obj : objs){
+				ArtistInfo a = (ArtistInfo) obj;
+			
 			System.out.printf("%d, %s, %s, %s\n", 
 					a.getNo(), a.getArtist(), a.getRealName(), a.getBornDate());
 		}
-	
+	}
 
 	public  void addArtist() {
  		ArtistInfo artist = new ArtistInfo();
