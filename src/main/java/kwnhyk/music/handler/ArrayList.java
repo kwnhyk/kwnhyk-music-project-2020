@@ -3,9 +3,9 @@ package kwnhyk.music.handler;
 import java.util.Arrays;
 
 
-public class ArrayList{
+public class ArrayList<E>{
 
-    final static int DEFAULT_SIZE = 10;
+    private final static int DEFAULT_SIZE = 10;
     Object[] list;
     int size = 0;
 
@@ -17,23 +17,81 @@ public class ArrayList{
     
     public ArrayList(int init){
         if(init > DEFAULT_SIZE)
-        list = new Object[init];
+        this.list = new Object[init];
         else
-        list = new Object[DEFAULT_SIZE];
+        this.list = new Object[DEFAULT_SIZE];
 
     }
     public Object[] toArray(){
-        return Arrays.copyOf(list, size);
+        /*
+        E[] arr = new E[this.size];
+        for(int i =0 ; i<this.size;i++){
+            arr[i]= this.list[i];           
+        }
+        return arr;
+        */
+        return Arrays.copyOf(this.list, this.size);
 
     }
-    public void add(Object obj){
+    @SuppressWarnings("unchecked")
+	public E[] toArray(E[] arr){
+        if(arr.length<this.size){
+            return (E[]) Arrays.copyOf(this.list,this.size, arr.getClass());
+        }
+        System.arraycopy(this.list, 0, arr, 0, this.size);
+        return arr;
+    }
+    public void add(E e){
         if(size >=list.length){
             int oldCapacity = list.length;
             int newCapacity = oldCapacity +(oldCapacity >>1);
-            list = Arrays.copyOf(list, newCapacity);
+            /*E[] arr = new E[newCapacity];
+            for(int i =0;i <this.size;i++){
+                arr[i]= this.list[i];
+            }
+*/
+
+
+           this.list = Arrays.copyOf(list, newCapacity);
 
         }
-        list[size++] = obj;
+        this.list[size++] = e;
 
+    }
+    @SuppressWarnings("unchecked")
+	public E get(int index){
+         if(index<0 || index>=this.size){
+             return null;
+         }
+    return (E)this.list[index];
+
+    }
+    @SuppressWarnings("unchecked")
+	public E set(int index ,E e){
+        
+        if(index<0 || index>=this.size){
+            return null;
+        }
+        
+        this.list[index] = e;
+       E old = (E)this.list[index];
+        return old;
+    }
+
+    @SuppressWarnings("unchecked")
+	public E remove(int index){
+        if(index<0 ||index>=this.size){
+            return null;
+
+        }
+        E old = (E)this.list[index];
+        System.arraycopy(this.list,index, this.list , index-1,this.size-(index+1));
+       /* for(int i = index+1;i<this.size;i++){
+            this.list[i-1] = this.list[i];
+        }
+        */
+        this.size--;
+        
+        return old;
     }
 }
