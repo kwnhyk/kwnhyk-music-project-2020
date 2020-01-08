@@ -9,16 +9,16 @@ import kwnhyk.music.domain.MusicInfo;
 
 public class MusicHandler {
 
-	ArrayList musicList;
+	ArrayList<MusicInfo> musicList;
 
 	  Scanner input;
 	public MusicHandler(Scanner input) {
 		this.input = input;
-		this.musicList = new ArrayList();
+		this.musicList = new ArrayList<>();
 	}
 	public MusicHandler(Scanner input,int capacity) {
 		this.input = input;
-		this.musicList = new ArrayList(capacity);
+		this.musicList = new ArrayList<>(capacity);
 	}
 	public  void listMusic( ) {
 		Object[] lists = musicList.toArray();
