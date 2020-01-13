@@ -31,40 +31,40 @@
 
 ### 작업2) 음악 데이터의 상세조회, 변경, 삭제 기능을 추가하라.
 
-- MusicHandler.java (MusicHandler.java.01)
-  - 상세조회 기능을 수행하는 detailMusicInfo()을 정의한다.
-  - 변경 기능을 수행하는 updateMusicInfo()을 정의한다.
-  - 삭제 기능을 수행하는 deleteMusicInfo()을 정의한다.
+- MusicHandler.java 
+  - 상세조회 기능을 수행하는 detailMusic()을 정의한다.
+  - 변경 기능을 수행하는 updateMusic()을 정의한다.
+  - 삭제 기능을 수행하는 deleteMusic()을 정의한다.
 - App.java
   - 상세조회, 변경, 삭제 명령에 대한 분기문을 추가한다.
 
 #### 실행 결과
 
 ```
-명령> /MusicInfo/list
+명령> /Music/list
 
 
-명령> /MusicInfo/detail
+명령> /Music/detail
 번호? 2
 
 
-명령> /MusicInfo/detail
+명령> /Music/detail
 번호? 20
 해당 음악을 찾을 수 없습니다.
 
-명령> /MusicInfo/update
+명령> /Music/update
 번호? 2
 
 
-명령> /MusicInfo/update
+명령> /Music/update
 번호? 20
 해당 음악을 찾을 수 없습니다.
 
-명령> /MusicInfo/delete
+명령> /Music/delete
 번호? 2
 음악을 삭제했습니다.
 
-명령> /MusicInfo/delete
+명령> /Music/delete
 번호? 20
 해당 음악을 찾을 수 없습니다.
 ```
@@ -72,7 +72,7 @@
 ### 작업3) MusicHandler 코드를 리팩토링하라.
 
 - MusicHandler.java
-    - 저장된 목록에서 수업 번호로 항목을 찾는 코드를 indexOfMusicInfo() 메서드로 분리한다.
+    - 저장된 목록에서 수업 번호로 항목을 찾는 코드를 indexOfMusic() 메서드로 분리한다.
 - MusicInfo.java
     - 인스턴스 복제를 할 수 있도록 java.lang.Cloneable 인터페이스를 구현한다.
     - clone()을 오버라이딩 한다.
@@ -81,10 +81,10 @@
 ### 작업4) 아티스트 데이터의 상세조회, 변경, 삭제 기능을 추가하라.
 
 - ArtistHandler.java
-    - 상세조회 기능을 수행하는 detailArtistInfo()을 정의한다.
-    - 변경 기능을 수행하는 updateArtistInfo()을 정의한다.
-    - 삭제 기능을 수행하는 deleteArtistInfo()을 정의한다.
-    - 저장된 목록에서 회원 번호로 항목을 찾는 indexOfArtistInfo()를 정의한다.
+    - 상세조회 기능을 수행하는 detailArtist()을 정의한다.
+    - 변경 기능을 수행하는 updateArtist()을 정의한다.
+    - 삭제 기능을 수행하는 deleteArtist()을 정의한다.
+    - 저장된 목록에서 회원 번호로 항목을 찾는 indexOfArtist()를 정의한다.
 - ArtistInfo.java
     - 인스턴스 복제를 할 수 있도록 java.lang.Cloneable 인터페이스를 구현한다.
     - clone()을 오버라이딩 한다.
@@ -94,31 +94,31 @@
 #### 실행 결과
 
 ```
-명령> /ArtistInfo/list
+명령> /Artist/list
 
 
-명령> /ArtistInfo/detail
+명령> /Artist/detail
 번호? 2
 
 
-명령> /ArtistInfo/detail
+명령> /Artist/detail
 번호? 20
 해당 아티스트을 찾을 수 없습니다.
 
-명령> /ArtistInfo/update
+명령> /Artist/update
 번호? 1
 
 아티스트를 변경했습니다.
 
-명령> /ArtistInfo/update
+명령> /Artist/update
 번호? 20
 해당 아티스트를 찾을 수 없습니다.
 
-명령> /ArtistInfo/delete
+명령> /Artist/delete
 번호? 2
 아티스트을 삭제했습니다.
 
-명령> /ArtistInfo/delete
+명령> /Artist/delete
 번호? 20
 해당 아티스트을 찾을 수 없습니다.
 ```
@@ -140,14 +140,14 @@
 
 ```
 명령> /board/list
-1, 게시글입니다.                , 2019-01-01, 0
-2, 두 번째 게시글입니다.        , 2019-01-01, 0
-3, 세 번째 게시글입니다.        , 2019-01-01, 0
+1, 게시글입니다.                , q
+2, 두 번째 게시글입니다.        , q
+3, 세 번째 게시글입니다.        , q
 
 명령> /board/detail
 번호? 1
-내용: 게시글입니다.
-작성일: 2019-01-01
+제목:게시글입니다.
+내용: q
 
 명령> /board/detail
 번호? 20

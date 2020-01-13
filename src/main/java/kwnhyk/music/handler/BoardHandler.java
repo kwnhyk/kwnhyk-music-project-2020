@@ -32,10 +32,9 @@ public class BoardHandler {
 	}
 	
 	public  void listBoard() {
-		Object[] boards = boardList.toArray();
-
-		for(Object obj : boards) {
-			BoardInfo b = (BoardInfo)obj;
+		BoardInfo[] boards = new BoardInfo[this.boardList.size()];
+		this.boardList.toArray(boards);
+		for(BoardInfo b : boards) {
 		System.out.printf("%d %s %s ", b.getNum(), b.getTitle(), b.getContents());
 		
 		
@@ -43,46 +42,46 @@ public class BoardHandler {
 	}
 }
 	public void detailBoard() {
-	    System.out.print("게시글 인덱스? ");
-	    int index = input.nextInt();
+	    System.out.print("게시글 번호? ");
+	    int no = input.nextInt();
 	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
+	    int index = indexOfBoard(no);
+	
 	    
-	    BoardInfo board = this.boardList.get(index);
-	    
-	    if (board == null) {
-	      System.out.println("게시글 인덱스가 유효하지 않습니다.");
+	    if (index ==-1) {
+	      System.out.println(" 번호 유효하지 않습니다.");
 	      return;
 	    }
-	    
+	    BoardInfo board = this.boardList.get(index);
 	    System.out.printf("번호: %d\n", board.getNum());
 	    System.out.printf("제목: %s\n", board.getTitle());
 	    System.out.printf("내용: %s\n", board.getContents());
 	  }
 	  
 	  public void updateBoard() {
-	    System.out.print("게시글 인덱스? ");
-	    int index = input.nextInt();
+	    System.out.print("게시글 번호? ");
+	    int no = input.nextInt();
 	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
 	    
-	    BoardInfo oldBoard = this.boardList.get(index);
+	   int index = indexOfBoard(no);
 	    
-	    if (oldBoard == null) {
-	      System.out.println("게시글 인덱스가 유효하지 않습니다.");
+	    if (index ==-1) {
+	      System.out.println("게시글 번호 유효하지 않습니다.");
 	      return;
 	    }
+	    BoardInfo oldBoard = this.boardList.get(index);
+	    System.out.printf("내용(%s)? ", oldBoard.getContents());
+	    String contents = input.nextLine();
 	    
-	    System.out.printf("내용(%s)? ", oldBoard.getTitle());
-	    String title = input.nextLine();
-	    
-	    if (title.length() == 0) {
+	    if (contents.length() == 0) {
 	      System.out.println("게시글 변경을 취소했습니다.");
 	      return;
 	    }
 	    
 	    BoardInfo newBoard = new BoardInfo();
 	    newBoard.setNum(oldBoard.getNum());
-	    newBoard.setTitle(title);
-	    newBoard.getContents();
+	    newBoard.getTitle();
+	    newBoard.setContents(contents);
 	    this.boardList.set(index, newBoard);
 	    
 	    System.out.println("게시글을 변경했습니다.");
@@ -90,19 +89,27 @@ public class BoardHandler {
 	  
 	  public void deleteBoard() {
 	    System.out.print("게시글 인덱스? ");
-	    int index = input.nextInt();
+	    int no = input.nextInt();
 	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
+	    int index = indexOfBoard(no);
+	
 	    
-	    BoardInfo board = this.boardList.get(index);
-	    
-	    if (board == null) {
+	    if (index == -1) {
 	      System.out.println("게시글 인덱스가 유효하지 않습니다.");
 	      return;
 	    }
-	    
+	   
 	    this.boardList.remove(index);
 	    
 	    System.out.println("게시글을 삭제했습니다.");
+	  }
+	  private int indexOfBoard(int no) {
+		  for(int i =0;i<this.boardList.size();i++) {
+			  if(this.boardList.get(i).getNum()==no) {
+				  return i;
+			  }
+		  }
+		  return -1;
 	  }
 
 }

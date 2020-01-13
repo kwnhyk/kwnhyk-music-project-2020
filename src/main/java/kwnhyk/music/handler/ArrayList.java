@@ -94,4 +94,7 @@ public class ArrayList<E>{
         
         return old;
     }
+    public int size() {
+    return	this.size;
+    }
 }
