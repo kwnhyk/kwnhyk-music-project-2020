@@ -1,9 +1,9 @@
 package kwnhyk.music.handler;
 
-import java.sql.Date;
-import java.util.Scanner;
 
 import kwnhyk.music.domain.MusicInfo;
+import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.Prompt;
 
 
 
@@ -11,14 +11,13 @@ import kwnhyk.music.domain.MusicInfo;
 public class MusicHandler {
 
 	ArrayList<MusicInfo> musicList;
-
-	  Scanner input;
-	public MusicHandler(Scanner input) {
-		this.input = input;
+Prompt prompt;
+	public MusicHandler(Prompt prompt) {
+		this.prompt = prompt;
 		this.musicList = new ArrayList<>();
 	}
-	public MusicHandler(Scanner input,int capacity) {
-		this.input = input;
+	public MusicHandler(Prompt prompt,int capacity) {
+		this.prompt = prompt;
 		this.musicList = new ArrayList<>(capacity);
 	}
 	public  void listMusic( ) {
@@ -37,34 +36,25 @@ public class MusicHandler {
 	public  void addMusic(){
 			MusicInfo music = new MusicInfo();
 
-			System.out.print("번호? ");
-			music.setNo(Integer.parseInt(input.nextLine()));
+			music.setNo(prompt.inputInt("번호?"));
 
 
-			System.out.print("음악제목? ");
-			music.setTitle(input.nextLine());
+			music.setTitle(prompt.inputString("음악제목?"));
 
-			System.out.print("아티스트명? ");
-			music.setArtist(input.nextLine());
-			System.out.print("작곡가? ");
-			music.setWriter(input.nextLine());
-			System.out.print("장르? ");
-			music.setGenre(input.nextLine());
+			music.setArtist(prompt.inputString("아티스트명"));
+			music.setWriter(prompt.inputString("작곡가? "));
+			music.setGenre(prompt.inputString("장르? "));
 
-			System.out.print("출시일? ");
 
-			music.setStartDate(Date.valueOf(input.next()));
-			input.nextLine();
+			music.setStartDate(prompt.inputDate("출시일?"));
 
 			musicList.add(music);
 			
 			System.out.println("저장하였습니다");
 		}
 	public void detailMusic() {
-	    System.out.print("번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
-	    int index =indexOfMusic(no);
+	   
+	    int index =indexOfMusic(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {
@@ -81,10 +71,7 @@ public class MusicHandler {
 	  }
 	  
 	  public void updateMusic() {
-	    System.out.print(" 번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
-	    int index =indexOfMusic(no);
+	    int index =indexOfMusic(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {
@@ -92,61 +79,56 @@ public class MusicHandler {
 	      return;
 	    }
 	    MusicInfo oldMusic = this.musicList.get(index);
-	    String inputStr = null;
 	    MusicInfo newMusic = new MusicInfo();
 	    newMusic.setNo(oldMusic.getNo());
-	    
-	    System.out.printf("음악제목(%s)? ", oldMusic.getTitle());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
-	    	newMusic.setTitle(oldMusic.getTitle());
-	      System.out.println("아티스트 변경을 취소했습니다.");
-	     
-	    }  else {
-	    	newMusic.setTitle(inputStr);
-		}
-	    System.out.printf("아티스트명(%s)? ", oldMusic.getArtist());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
-	    	newMusic.setArtist(oldMusic.getArtist());
-	      System.out.println("아티스트 변경을 취소했습니다.");
-	     
-	    }  else {
-	    	newMusic.setArtist(inputStr);
-		}
-
-			System.out.printf("작곡가(%s)? ", oldMusic.getWriter());
-			inputStr = input.nextLine();
-			if (inputStr.length() == 0) {
-				newMusic.setWriter(oldMusic.getWriter());
-			  System.out.println("작곡가 변경을 취소했습니다.");
-			 
-			}  else {
-				newMusic.setWriter(inputStr);
+		
+		newMusic.setTitle(prompt.inputString(String.format("음악제목(%s)?", oldMusic.getTitle())
+		,oldMusic.getTitle())
+		);
 			
-			}
+		newMusic.setArtist(prompt.inputString(String.format("아티스트명(%s)?", oldMusic.getArtist())
+		,oldMusic.getArtist())
+		);
+			
+		newMusic.setWriter(prompt.inputString(String.format("작곡가(%s)?", oldMusic.getWriter())
+		,oldMusic.getWriter())
+		);
+			
+		newMusic.setGenre(prompt.inputString(String.format("장르(%s)?", oldMusic.getGenre())
+		,oldMusic.getGenre())
+		);
+			
+		newMusic.setStartDate(prompt.inputDate(String.format("출시일(%s)?", oldMusic.getStartDate())
+		,oldMusic.getStartDate())
+		);
+	     
 	  
-	    System.out.printf("장르(%s)? ", oldMusic.getGenre());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
+	  
+	   /* System.out.printf("장르(%s)? ", oldMusic.getGenre());
+	    promptStr = prompt.nextLine();
+	    if (promptStr.length() == 0) {
 	    	newMusic.setGenre(oldMusic.getGenre());
 	      System.out.println("장르 변경을 취소했습니다.");
 	     
 	    }  else {
-	    	newMusic.setGenre(inputStr);
+	    	newMusic.setGenre(promptStr);
 	    
-	    }
-		System.out.printf("출시일(%s)? ", oldMusic.getStartDate());
-		inputStr = input.nextLine();
-		if (inputStr.length() == 0) {
+		}
+		*/
+		/*System.out.printf("출시일(%s)? ", oldMusic.getStartDate());
+		promptStr = prompt.nextLine();
+		if (promptStr.length() == 0) {
 			newMusic.setStartDate(oldMusic.getStartDate());
 		  System.out.println("출시일 변경을 취소했습니다.");
 		 
 		}  else {
-			newMusic.setStartDate(Date.valueOf(inputStr));
+			newMusic.setStartDate(Date.valueOf(promptStr));
 		
 		}
-	 
+		*/
+		if(oldMusic.equals(newMusic)){
+			return;
+		}
 	    
 	  
 	    this.musicList.set(index, newMusic);
@@ -155,11 +137,8 @@ public class MusicHandler {
 	  }
 	  
 	  public void deleteMusic() {
-	    System.out.print(" 번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
 	    
-   int index =indexOfMusic(no);
+   int index =indexOfMusic(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {
