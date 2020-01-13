@@ -1,19 +1,18 @@
 package kwnhyk.music.handler;
 
-import java.sql.Date;
-import java.util.Scanner;
 
 import kwnhyk.music.domain.ArtistInfo;
+import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.Prompt;
 
 
 public class ArtistHandler {
 
 	
 	ArrayList<ArtistInfo> artistList;
-
-	  Scanner input ;
-	public ArtistHandler(Scanner input) {
-		this.input = input;
+	Prompt prompt;
+	public ArtistHandler(Prompt input) {
+		this.prompt = input;
 		 this.artistList = new ArrayList<>();
 	}
 	public  void listArtist() {
@@ -28,21 +27,18 @@ public class ArtistHandler {
 
 	public  void addArtist() {
  		ArtistInfo artist = new ArtistInfo();
-		System.out.print("번호? ");
-		artist.setNo(input.nextInt());
-		input.nextLine(); // 줄바꿈 기호 제거용
+		artist.setNo(prompt.inputInt("번호?"));
 
 		System.out.print("아티스트명? ");
-		artist.setArtist(input.nextLine());
+		artist.setArtist(prompt.inputString("아티스트명?"));
 
 		System.out.print("본명? ");
-		artist.setRealName(input.nextLine());
+		artist.setRealName(prompt.inputString("본명?"));
 
 		System.out.print("출생일? ");
 
 		// "yyyy-MM-dd" 형태로 입력된 문자열을 날짜 정보로 바꾼다.
-		artist.setBornDate(Date.valueOf(input.next()));
-		input.nextLine(); 
+		artist.setBornDate(prompt.inputDate("출생일?"));
 		artistList.add(artist);
 		//this.artists[this.artistCount++]=artist;
 
@@ -50,10 +46,7 @@ public class ArtistHandler {
 
 	}
 	public void detailArtist() {
-	    System.out.print("번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
-	    int index =indexOfAritst(no);
+	    int index =indexOfAritst(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {
@@ -68,10 +61,7 @@ public class ArtistHandler {
 	  }
 	  
 	  public void updateArtist() {
-	    System.out.print(" 번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
-	    int index =indexOfAritst(no);
+	    int index =indexOfAritst(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {
@@ -79,39 +69,20 @@ public class ArtistHandler {
 	      return;
 	    }
 	    ArtistInfo oldArtist = this.artistList.get(index);
-	    String inputStr = null;
 	    ArtistInfo newArtist = new ArtistInfo();
 	    newArtist.setNo(oldArtist.getNo());
-	    System.out.printf("아티스트명(%s)? ", oldArtist.getArtist());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
-	    	newArtist.setArtist(oldArtist.getArtist());
-	      System.out.println("아티스트 변경을 취소했습니다.");
-	     
-	    }  else {
-	    	newArtist.setArtist(inputStr);
+	   newArtist.setArtist(prompt.inputString(String.format("아티스트명(%s)", oldArtist.getArtist()),
+			   oldArtist.getArtist()));
+	   newArtist.setBornDate(prompt.inputDate(String.format("출생일(%s)", oldArtist.getBornDate()),
+			   oldArtist.getBornDate()));
+	   newArtist.setRealName(prompt.inputString(String.format("본명(%s)", oldArtist.getRealName()),
+			   oldArtist.getRealName()));
 	    
-	    }
-	    System.out.printf("출생일(%s)? ", oldArtist.getBornDate());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
-	    	newArtist.setBornDate(oldArtist.getBornDate());
-	      System.out.println("아티스트 변경을 취소했습니다.");
-	     
-	    }  else {
-	    	newArtist.setBornDate(Date.valueOf(inputStr));
-	    
-	    }
-	    System.out.printf("본명(%s)? ", oldArtist.getRealName());
-	    inputStr = input.nextLine();
-	    if (inputStr.length() == 0) {
-	    	newArtist.setRealName(oldArtist.getRealName());
-	      System.out.println("아티스트 변경을 취소했습니다.");
-	     
-	    }  else {
-	    	newArtist.setRealName(inputStr);
-	    
-	    }
+	  
+		if(oldArtist.equals(newArtist)){
+			System.out.println("변경취소");
+			return;
+		}
 	 
 	    
 	  
@@ -121,10 +92,7 @@ public class ArtistHandler {
 	  }
 	  
 	  public void deleteArtist() {
-	    System.out.print(" 번호? ");
-	    int no = input.nextInt();
-	    input.nextLine(); // 숫자 뒤의 남은 공백 제거
-	    int index =indexOfAritst(no);
+	    int index =indexOfAritst(prompt.inputInt("번호?"));
 	    
 	    
 	    if (index == -1) {

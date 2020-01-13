@@ -6,19 +6,21 @@ import java.util.Scanner;
 import kwnhyk.music.handler.ArtistHandler;
 import kwnhyk.music.handler.BoardHandler;
 import kwnhyk.music.handler.MusicHandler;
+import kwnhyk.music.util.Prompt;
 
 
 
 public class App {
 	static Scanner keyboard = new Scanner(System.in);
-
+	
 
 
 
 	public static void main(String[] args) {
-		MusicHandler musicHandler = new MusicHandler(keyboard);
-		ArtistHandler artistHandler = new ArtistHandler(keyboard);
-		BoardHandler boardHandler = new BoardHandler(keyboard);
+		Prompt prompt = new Prompt(keyboard);
+		MusicHandler musicHandler = new MusicHandler(prompt);
+		ArtistHandler artistHandler = new ArtistHandler(prompt);
+		BoardHandler boardHandler = new BoardHandler(prompt);
 		
 		
 		String command ;
