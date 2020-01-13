@@ -1,19 +1,18 @@
 package kwnhyk.music.handler;
 
-
 import kwnhyk.music.domain.ArtistInfo;
-import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.LinkedList;
 import kwnhyk.music.util.Prompt;
 
 
 public class ArtistHandler {
 
 	
-	ArrayList<ArtistInfo> artistList;
+	LinkedList<ArtistInfo> artistList;
 	Prompt prompt;
 	public ArtistHandler(Prompt input) {
 		this.prompt = input;
-		 this.artistList = new ArrayList<>();
+		 this.artistList = new LinkedList<>();
 	}
 	public  void listArtist() {
 		ArtistInfo[] objs = this.artistList.toArray(new ArtistInfo[]{});

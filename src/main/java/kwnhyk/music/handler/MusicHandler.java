@@ -1,8 +1,8 @@
 package kwnhyk.music.handler;
 
+import java.util.LinkedList;
 
 import kwnhyk.music.domain.MusicInfo;
-import kwnhyk.music.util.ArrayList;
 import kwnhyk.music.util.Prompt;
 
 
@@ -10,16 +10,14 @@ import kwnhyk.music.util.Prompt;
 
 public class MusicHandler {
 
-	ArrayList<MusicInfo> musicList;
+	LinkedList<MusicInfo> musicList;
 Prompt prompt;
 	public MusicHandler(Prompt prompt) {
 		this.prompt = prompt;
-		this.musicList = new ArrayList<>();
+		this.musicList = new LinkedList<>();
 	}
-	public MusicHandler(Prompt prompt,int capacity) {
-		this.prompt = prompt;
-		this.musicList = new ArrayList<>(capacity);
-	}
+	
+
 	public  void listMusic( ) {
 		MusicInfo[] lists = this.musicList.toArray(new MusicInfo[] {});
 		for(MusicInfo m : lists){
