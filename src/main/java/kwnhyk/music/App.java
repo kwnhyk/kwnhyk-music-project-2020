@@ -17,9 +17,7 @@ public class App {
 
 	public static void main(String[] args) {
 		MusicHandler musicHandler = new MusicHandler(keyboard);
-		MusicHandler musicHandler2 = new MusicHandler(keyboard);
 		ArtistHandler artistHandler = new ArtistHandler(keyboard);
-		ArtistHandler artistHandler2 = new ArtistHandler(keyboard);
 		BoardHandler boardHandler = new BoardHandler(keyboard);
 		
 		
@@ -40,12 +38,16 @@ public class App {
 
 
 				break;
-			case "/music2/add":
-				musicHandler2.listMusic();
+			case "/music/detail":
+				musicHandler.detailMusic();
 				break;
-			case "/music2/list":
-				musicHandler2.listMusic();
+			case "/music/update":
+				musicHandler.updateMusic();
 				break;
+			case "/music/delete":
+				musicHandler.deleteMusic();
+				break;
+		
 
 			case "/artist/add":
 				artistHandler.addArtist();
@@ -53,18 +55,29 @@ public class App {
 			case"/artist/list":
 				artistHandler.listArtist();
 				break;
-			case "/artist2/add":
-				artistHandler2.addArtist();
+			case "/artist/detail":
+				artistHandler.detailArtist();
 				break;
-			
-			case"/artist2/list":
-				artistHandler2.listArtist();
+			case "/artist/update":
+				artistHandler.updateArtist();
+				break;
+			case "/artist/delete":
+				artistHandler.deleteArtist();
 				break;
 			case "/board/add":
 				boardHandler.addBoard();
 				break;
 			case "/board/list":
 				boardHandler.listBoard();
+				break;
+				case "/board/detail":
+				boardHandler.detailBoard();
+				break;
+			case "/board/update":
+				boardHandler.updateBoard();
+				break;
+				case "/board/delete":
+				boardHandler.deleteBoard();
 				break;
 			default:
 				if(!command.equalsIgnoreCase("quit")){

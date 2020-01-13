@@ -1,5 +1,7 @@
 package kwnhyk.music.domain;
 
+import java.sql.Date;
+
 public class MusicInfo {
 	private int no;
 	private String title;
@@ -7,7 +9,7 @@ public class MusicInfo {
 
 	private String writer;
 	private String genre;
-	private int startDate;
+	private Date startDate;
 
 	public int getNo() {
 		return no;
@@ -49,11 +51,11 @@ public class MusicInfo {
 		this.genre = genre;
 	}
 
-	public int getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(int startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
