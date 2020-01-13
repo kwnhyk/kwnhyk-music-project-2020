@@ -3,15 +3,15 @@ package kwnhyk.music.handler;
 
 
 import kwnhyk.music.domain.BoardInfo;
-import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.LinkedList;
 import kwnhyk.music.util.Prompt;
 
 public class BoardHandler {
 	Prompt prompt;
-	ArrayList<BoardInfo>boardList;
+	LinkedList<BoardInfo>boardList;
 	 public BoardHandler(Prompt prompt) {
 			this.prompt = prompt;
-			 this.boardList = new ArrayList<>();
+			 this.boardList = new LinkedList<>();
 		}
 	
 	public   void addBoard( ) {

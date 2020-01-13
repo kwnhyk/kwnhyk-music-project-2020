@@ -42,21 +42,27 @@ public class ArrayList<E>{
         return arr;
     }
     public void add(E e){
-        if(size >=list.length){
-            int oldCapacity = list.length;
-            int newCapacity = oldCapacity +(oldCapacity >>1);
+        if(size ==list.length){
+        grow();
+         
+    }
+    this.list[size++] = e;
             /*E[] arr = new E[newCapacity];
             for(int i =0;i <this.size;i++){
                 arr[i]= this.list[i];
             }
 */
 
-
-           this.list = Arrays.copyOf(list, newCapacity);
-
         }
-        this.list[size++] = e;
+       
 
+    
+    private int newCapacity(){
+        int oldCapacity = this.list.length;
+      return   oldCapacity +(oldCapacity >>1);
+    }
+    private Object[] grow(){
+       return this.list = Arrays.copyOf(list, newCapacity());
     }
     @SuppressWarnings("unchecked")
 	public E get(int index){
@@ -97,4 +103,5 @@ public class ArrayList<E>{
     public int size() {
     return	this.size;
     }
+
 }
