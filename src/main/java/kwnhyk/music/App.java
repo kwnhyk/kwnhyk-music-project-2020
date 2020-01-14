@@ -14,7 +14,7 @@ import kwnhyk.music.util.Stack;
 public class App {
 	static Scanner keyboard = new Scanner(System.in);
 	static Stack<String> commandStack = new Stack<>();
-	
+
 
 
 
@@ -23,8 +23,8 @@ public class App {
 		MusicHandler musicHandler = new MusicHandler(prompt);
 		ArtistHandler artistHandler = new ArtistHandler(prompt);
 		BoardHandler boardHandler = new BoardHandler(prompt);
-		
-		
+
+
 		String command ;
 
 		do{
@@ -37,7 +37,7 @@ public class App {
 			case "/music/add":
 				musicHandler.addMusic();
 
-				
+
 				break;
 			case "/music/list":
 				musicHandler.listMusic();
@@ -53,7 +53,7 @@ public class App {
 			case "/music/delete":
 				musicHandler.deleteMusic();
 				break;
-		
+
 
 			case "/artist/add":
 				artistHandler.addArtist();
@@ -76,21 +76,21 @@ public class App {
 			case "/board/list":
 				boardHandler.listBoard();
 				break;
-				case "/board/detail":
+			case "/board/detail":
 				boardHandler.detailBoard();
 				break;
 			case "/board/update":
 				boardHandler.updateBoard();
 				break;
-				case "/board/delete":
+			case "/board/delete":
 				boardHandler.deleteBoard();
 				break;
-				case"history":
-					printCommandHistory();
+			case"history":
+				printCommandHistory();
 			default:
 				if(!command.equalsIgnoreCase("quit")){
 					System.out.println("실행할 수 없는 명령입니다.");
-					
+
 				}
 			}
 		}while(!command.equalsIgnoreCase("quit"));
@@ -108,7 +108,7 @@ public class App {
 		while(!historyStack.empty()) {
 			System.out.println(historyStack.pop());
 			count++;
-			
+//5개씩 끊어서
 			if((count%5)==0) {
 				System.out.print(":");
 				String str = keyboard.nextLine();
@@ -117,10 +117,10 @@ public class App {
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
+
 }
 
 
