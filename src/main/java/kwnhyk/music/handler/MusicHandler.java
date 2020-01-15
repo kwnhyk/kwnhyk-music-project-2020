@@ -1,8 +1,8 @@
 package kwnhyk.music.Handler;
 
-import java.util.LinkedList;
 
 import kwnhyk.music.domain.MusicInfo;
+import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
 
@@ -10,11 +10,11 @@ import kwnhyk.music.util.Prompt;
 
 public class MusicHandler {
 
-	LinkedList<MusicInfo> musicList;
+	List<MusicInfo> musicList;
 Prompt prompt;
-	public MusicHandler(Prompt prompt) {
+	public MusicHandler(Prompt prompt,List<MusicInfo> list) {
 		this.prompt = prompt;
-		this.musicList = new LinkedList<>();
+		this.musicList = list;
 	}
 	
 
@@ -23,7 +23,7 @@ Prompt prompt;
 		for(MusicInfo m : lists){
 
 
-			System.out.printf("%d, %s, %s , %s,%s,%d\n",
+			System.out.printf("%d, %s, %s , %s,%s,%s\n",
 					m.getNo(), m.getTitle(),
 					m.getArtist(), m.getWriter(),m.getGenre(), 
 					m.getStartDate()

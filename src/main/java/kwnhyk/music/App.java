@@ -6,6 +6,11 @@ import java.util.Scanner;
 import kwnhyk.music.Handler.ArtistHandler;
 import kwnhyk.music.Handler.BoardHandler;
 import kwnhyk.music.Handler.MusicHandler;
+import kwnhyk.music.domain.ArtistInfo;
+import kwnhyk.music.domain.BoardInfo;
+import kwnhyk.music.domain.MusicInfo;
+import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.LinkedList;
 import kwnhyk.music.util.Prompt;
 import kwnhyk.music.util.Queue;
 import kwnhyk.music.util.Stack;
@@ -21,9 +26,13 @@ public class App {
 
 	public static void main(String[] args) {
 		Prompt prompt = new Prompt(keyboard);
-		MusicHandler musicHandler = new MusicHandler(prompt);
-		ArtistHandler artistHandler = new ArtistHandler(prompt);
-		BoardHandler boardHandler = new BoardHandler(prompt);
+		ArrayList<MusicInfo> musicList = new ArrayList<>();
+		MusicHandler musicHandler = new MusicHandler(prompt,musicList);
+		LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
+		ArtistHandler artistHandler = new ArtistHandler(prompt,artistList);
+		LinkedList<BoardInfo> boardList = new LinkedList<>();
+		
+		BoardHandler boardHandler = new BoardHandler(prompt,boardList);
 
 
 		String command ;

@@ -3,11 +3,11 @@ package kwnhyk.music.util;
 import java.util.Arrays;
 
 
-public class ArrayList<E>{
+public class ArrayList<E>extends List<E>{
 
     private final static int DEFAULT_SIZE = 10;
     Object[] list;
-    int size = 0;
+    
 
     public ArrayList(){
 
@@ -100,8 +100,6 @@ public class ArrayList<E>{
         
         return old;
     }
-    public int size() {
-    return	this.size;
-    }
+   
 
 }

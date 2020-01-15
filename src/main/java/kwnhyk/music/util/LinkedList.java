@@ -2,10 +2,10 @@ package kwnhyk.music.util;
 
 import java.lang.reflect.Array;
 
-public class LinkedList<E>{
+public class LinkedList<E>extends List<E>{
     Node<E> head;
     Node<E> tail;
-    int size;
+   
 
     public void add(E value){
      Node<E> newNode = new Node<>();
@@ -104,9 +104,7 @@ public class LinkedList<E>{
         }
         return arr;
     }
-    public int size(){
-        return this.size;
-    }
+  
     static class Node<T>{
     T value;
     Node<T> next;
