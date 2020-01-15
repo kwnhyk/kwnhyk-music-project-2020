@@ -1,20 +1,23 @@
 package kwnhyk.music.Handler;
 
 import kwnhyk.music.domain.ArtistInfo;
-import kwnhyk.music.util.AbstractList;
+import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
 
 public class ArtistHandler {
 
 	
-	AbstractList<ArtistInfo> artistList;
+	List<ArtistInfo> artistList;
 	Prompt prompt;
-	public ArtistHandler(Prompt input,AbstractList<ArtistInfo> list) {
+	public ArtistHandler(Prompt input,List<ArtistInfo> list) {
 		this.prompt = input;
 		this.artistList = list;
 	}
 	public  void listArtist() {
+		/*for(int i =0;i <artistList.size();i++) {
+			ArtistInfo a = artistList.get(i);
+		}*/
 		ArtistInfo[] objs = this.artistList.toArray(new ArtistInfo[]{});
 			for(ArtistInfo a : objs){
 			

@@ -2,7 +2,7 @@ package kwnhyk.music.Handler;
 
 
 import kwnhyk.music.domain.MusicInfo;
-import kwnhyk.music.util.AbstractList;
+import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
 
@@ -10,9 +10,9 @@ import kwnhyk.music.util.Prompt;
 
 public class MusicHandler {
 
-	AbstractList<MusicInfo> musicList;
+	List<MusicInfo> musicList;
 Prompt prompt;
-	public MusicHandler(Prompt prompt,AbstractList<MusicInfo> list) {
+	public MusicHandler(Prompt prompt,List<MusicInfo> list) {
 		this.prompt = prompt;
 		this.musicList = list;
 	}
