@@ -3,9 +3,9 @@ package kwnhyk.music;
 
 import java.util.Scanner;
 
-import kwnhyk.music.handler.ArtistHandler;
-import kwnhyk.music.handler.BoardHandler;
-import kwnhyk.music.handler.MusicHandler;
+import kwnhyk.music.Handler.ArtistHandler;
+import kwnhyk.music.Handler.BoardHandler;
+import kwnhyk.music.Handler.MusicHandler;
 import kwnhyk.music.util.Prompt;
 import kwnhyk.music.util.Stack;
 

@@ -1,4 +1,4 @@
-package kwnhyk.music.handler;
+package kwnhyk.music.Handler;
 
 import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.util.LinkedList;
