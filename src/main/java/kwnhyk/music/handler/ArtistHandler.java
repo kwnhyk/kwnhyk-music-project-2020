@@ -1,16 +1,16 @@
 package kwnhyk.music.Handler;
 
 import kwnhyk.music.domain.ArtistInfo;
-import kwnhyk.music.util.List;
+import kwnhyk.music.util.AbstractList;
 import kwnhyk.music.util.Prompt;
 
 
 public class ArtistHandler {
 
 	
-	List<ArtistInfo> artistList;
+	AbstractList<ArtistInfo> artistList;
 	Prompt prompt;
-	public ArtistHandler(Prompt input,List<ArtistInfo> list) {
+	public ArtistHandler(Prompt input,AbstractList<ArtistInfo> list) {
 		this.prompt = input;
 		this.artistList = list;
 	}

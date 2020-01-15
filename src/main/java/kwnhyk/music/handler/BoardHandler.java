@@ -3,13 +3,13 @@ package kwnhyk.music.Handler;
 
 
 import kwnhyk.music.domain.BoardInfo;
-import kwnhyk.music.util.List;
+import kwnhyk.music.util.AbstractList;
 import kwnhyk.music.util.Prompt;
 
 public class BoardHandler {
 	Prompt prompt;
-	List<BoardInfo>boardList;
-	 public BoardHandler(Prompt prompt,List<BoardInfo> list) {
+	AbstractList<BoardInfo>boardList;
+	 public BoardHandler(Prompt prompt,AbstractList<BoardInfo> list) {
 			this.prompt = prompt;
 			 this.boardList = list;
 		}

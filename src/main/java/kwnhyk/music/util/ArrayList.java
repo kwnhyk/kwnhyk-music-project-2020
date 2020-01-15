@@ -2,8 +2,7 @@ package kwnhyk.music.util;
 
 import java.util.Arrays;
 
-
-public class ArrayList<E>extends List<E>{
+public class ArrayList<E>extends AbstractList<E>{
 
     private final static int DEFAULT_SIZE = 10;
     Object[] list;
@@ -44,16 +43,29 @@ public class ArrayList<E>extends List<E>{
     public void add(E e){
         if(size ==list.length){
         grow();
-         
+        this.list[this.size++] = e;
     }
+        
+   
     this.list[size++] = e;
-            /*E[] arr = new E[newCapacity];
-            for(int i =0;i <this.size;i++){
-                arr[i]= this.list[i];
-            }
-*/
+         
 
         }
+  
+   public void add(int index, E value) {
+         if (index < 0 || index >= this.size)
+           return;
+
+         if (this.size == this.list.length) {
+           grow();
+         }
+
+         for (int i = size - 1; i >= index; i--)
+           this.list[i + 1] = this.list[i];
+
+         this.list[index] = value;
+         this.size++;
+       }
        
 
     
@@ -62,6 +74,11 @@ public class ArrayList<E>extends List<E>{
       return   oldCapacity +(oldCapacity >>1);
     }
     private Object[] grow(){
+    	   /*E[] arr = new E[newCapacity];
+        for(int i =0;i <this.size;i++){
+            arr[i]= this.list[i];
+        }
+*/
        return this.list = Arrays.copyOf(list, newCapacity());
     }
     @SuppressWarnings("unchecked")
