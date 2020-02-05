@@ -10,6 +10,7 @@ import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.domain.BoardInfo;
 import kwnhyk.music.domain.MusicInfo;
 import kwnhyk.music.util.ArrayList;
+import kwnhyk.music.util.Iterator;
 import kwnhyk.music.util.LinkedList;
 import kwnhyk.music.util.Prompt;
 import kwnhyk.music.util.Queue;
@@ -97,9 +98,9 @@ public class App {
 				boardHandler.deleteBoard();
 				break;
 			case"history":
-				printCommandHistory();
+				printCommandHistory(commandStack.iterator());
 			case"history2":
-				printCommandHistory2();
+				printCommandHistory(commandQueue.iterator());
 			default:
 				if(!command.equalsIgnoreCase("quit")){
 					System.out.println("실행할 수 없는 명령입니다.");
@@ -112,33 +113,12 @@ public class App {
 
 	}
 
-	private static void printCommandHistory2() {
-		Queue<String> historyQueue = commandQueue.clone();
-		int count = 0;
-		while(historyQueue.size()>0) {
-			System.out.println(historyQueue.poll());
+	private static void printCommandHistory(Iterator<String> iterator) {
 		
-//5개씩 끊어서
-			if((++count%5)==0) {
-				System.out.print(":");
-				String str = keyboard.nextLine();
-				if(str.equalsIgnoreCase("q")) {
-					break;
-				}
-			}
-		}
-
-	}
-
-
-
-
-	private static void printCommandHistory() {
-		Stack<String> historyStack = commandStack.clone();
 		int count = 0;
-		while(!historyStack.empty()) {
-			System.out.println(historyStack.pop());
-			count++;
+		while(iterator.hasNext()) {
+			System.out.println(iterator.next());
+		count++;
 //5개씩 끊어서
 			if((count%5)==0) {
 				System.out.print(":");
@@ -150,6 +130,11 @@ public class App {
 		}
 
 	}
+
+
+
+
+
 
 
 }

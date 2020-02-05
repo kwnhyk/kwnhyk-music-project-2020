@@ -12,6 +12,7 @@ public class Queue<E> extends LinkedList<E>implements Cloneable {
 	public E poll() {
 		return this.remove(0);
 	}
+	@Override
 	public Queue<E> clone() {
 		Queue<E> temp = new Queue<>();
 		
@@ -22,6 +23,11 @@ public class Queue<E> extends LinkedList<E>implements Cloneable {
 		
 		
 		
+		
+	}
+	@Override
+	public Iterator<E> iterator(){
+		return new QueueIterator<>(this);
 		
 	}
 

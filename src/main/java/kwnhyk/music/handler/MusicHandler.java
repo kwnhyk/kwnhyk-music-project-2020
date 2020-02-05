@@ -2,6 +2,7 @@ package kwnhyk.music.Handler;
 
 
 import kwnhyk.music.domain.MusicInfo;
+import kwnhyk.music.util.Iterator;
 import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
@@ -19,10 +20,12 @@ Prompt prompt;
 	
 
 	public  void listMusic( ) {
-		MusicInfo[] lists = this.musicList.toArray(new MusicInfo[] {});
-		for(MusicInfo m : lists){
-
-
+		//MusicInfo[] lists = this.musicList.toArray(new MusicInfo[] {});
+		//for(MusicInfo m : lists){
+			Iterator<MusicInfo> iterator = musicList.iterator();
+			while(iterator.hasNext()) {
+				MusicInfo m = iterator.next();
+		
 			System.out.printf("%d, %s, %s , %s,%s,%s\n",
 					m.getNo(), m.getTitle(),
 					m.getArtist(), m.getWriter(),m.getGenre(), 

@@ -3,6 +3,7 @@ package kwnhyk.music.Handler;
 
 
 import kwnhyk.music.domain.BoardInfo;
+import kwnhyk.music.util.Iterator;
 import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
@@ -30,10 +31,12 @@ public class BoardHandler {
 	}
 	
 	public  void listBoard() {
-		BoardInfo[] boards = new BoardInfo[this.boardList.size()];
-		this.boardList.toArray(boards);
-		for(BoardInfo b : boards) {
-		System.out.printf("%d %s %s ", b.getNum(), b.getTitle(), b.getContents());
+		Iterator<BoardInfo> iterator = boardList.iterator();
+		while(iterator.hasNext()) {
+			BoardInfo b = iterator.next();
+			
+		System.out.printf("%d %s %s ", 
+				b.getNum(), b.getTitle(), b.getContents());
 		
 		
 		

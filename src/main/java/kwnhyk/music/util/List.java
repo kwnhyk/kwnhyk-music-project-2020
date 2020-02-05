@@ -16,5 +16,8 @@ public interface List<E> {
 
 	E remove(int index);
 	int size();
+	
+	
+	Iterator<E> iterator();
 
 }
