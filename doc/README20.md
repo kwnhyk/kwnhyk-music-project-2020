@@ -1,4 +1,4 @@
-# 버전20 - `Iterator` 구현체와 스태틱 중첩 클래스(static nested class)
+# 버전19_1 - `Iterator` 구현체와 스태틱 중첩 클래스(static nested class)
 
 ##  목표
 

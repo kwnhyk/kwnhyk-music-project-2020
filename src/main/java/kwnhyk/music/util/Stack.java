@@ -87,13 +87,13 @@ public class Stack<E> implements Cloneable {
 	}
 	
 	public Iterator<E> iterator(){
-		return new StackIterator<>(this);
-	}
-	static class StackIterator<E> implements Iterator<E>{
+		
+		 return new Iterator<>(){
+	 
 
 		Stack<E> stack;
-		public StackIterator(Stack<E> stack) {
-			this.stack = stack.clone();
+		{
+			this.stack = Stack.this.clone();
 		// TODO Auto-generated constructor stub
 	}
 		@Override
@@ -107,7 +107,8 @@ public class Stack<E> implements Cloneable {
 			
 			return stack.pop();
 		}
+		
+	};
 
-	}
-	
+}
 }

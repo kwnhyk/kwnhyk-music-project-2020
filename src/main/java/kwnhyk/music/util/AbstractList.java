@@ -16,17 +16,17 @@ public abstract class AbstractList<E> implements List<E> {
 	
 		
 		// TODO Auto-generated method stub
-		return new ListIterator<>(this);
-	}
-	static class ListIterator<E> implements Iterator<E>{
+		 return new Iterator<>() {
+	
+	
 		
 		
 		
 		List<E> list;
 		int cursor;
-		public ListIterator(List<E> list) {
-			this.list = list;
 		
+		{
+		this.list = AbstractList.this;
 		}
 		@Override
 		public boolean hasNext() {
@@ -38,12 +38,13 @@ public abstract class AbstractList<E> implements List<E> {
 			
 			return list.get(cursor++);
 		}
+		
+	};
 
-	}
-
-		
+	
 		
 		
 	}
+}
 
 
