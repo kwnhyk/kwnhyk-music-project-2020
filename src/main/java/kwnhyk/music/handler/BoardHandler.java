@@ -2,9 +2,10 @@ package kwnhyk.music.Handler;
 
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import kwnhyk.music.domain.BoardInfo;
-import kwnhyk.music.util.Iterator;
-import kwnhyk.music.util.List;
 import kwnhyk.music.util.Prompt;
 
 public class BoardHandler {

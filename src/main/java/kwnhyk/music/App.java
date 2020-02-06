@@ -1,6 +1,12 @@
 //프로젝트: 음악 정보 사이트
 package kwnhyk.music;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import kwnhyk.music.Handler.ArtistHandler;
@@ -9,19 +15,14 @@ import kwnhyk.music.Handler.MusicHandler;
 import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.domain.BoardInfo;
 import kwnhyk.music.domain.MusicInfo;
-import kwnhyk.music.util.ArrayList;
-import kwnhyk.music.util.Iterator;
-import kwnhyk.music.util.LinkedList;
 import kwnhyk.music.util.Prompt;
-import kwnhyk.music.util.Queue;
-import kwnhyk.music.util.Stack;
 
 
 
 public class App {
 	static Scanner keyboard = new Scanner(System.in);
-	static Stack<String> commandStack = new Stack<>();
-	static Queue<String> commandQueue = new Queue<>();
+	static Deque<String> commandStack = new ArrayDeque<>();
+	static Queue<String> commandQueue = new LinkedList<>();
 
 
 
