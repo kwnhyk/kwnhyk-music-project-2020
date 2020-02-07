@@ -10,7 +10,12 @@ import java.util.Queue;
 import java.util.Scanner;
 
 import kwnhyk.music.Handler.ArtistHandler;
-import kwnhyk.music.Handler.BoardHandler;
+import kwnhyk.music.Handler.BoardAddCommand;
+import kwnhyk.music.Handler.BoardDeleteCommand;
+import kwnhyk.music.Handler.BoardDetailCommand;
+import kwnhyk.music.Handler.BoardListCommand;
+import kwnhyk.music.Handler.BoardUpdateCommand;
+import kwnhyk.music.Handler.Command;
 import kwnhyk.music.Handler.MusicHandler;
 import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.domain.BoardInfo;
@@ -34,8 +39,11 @@ public class App {
 		ArtistHandler artistHandler = new ArtistHandler(prompt,artistList);
 		LinkedList<BoardInfo> boardList = new LinkedList<>();
 		
-		BoardHandler boardHandler = new BoardHandler(prompt,boardList);
-
+		Command boardAddCommand = new BoardAddCommand(prompt, boardList);
+		 Command boardListCommand = new BoardListCommand(boardList);
+		    Command boardDetailCommand = new BoardDetailCommand(prompt, boardList);
+		    Command boardUpdateCommand = new BoardUpdateCommand(prompt, boardList);
+		    Command boardDeleteCommand = new BoardDeleteCommand(prompt, boardList);
 
 		String command ;
 
@@ -84,10 +92,10 @@ public class App {
 				artistHandler.deleteArtist();
 				break;
 			case "/board/add":
-				boardHandler.addBoard();
+				boardAddCommand.excute();
 				break;
 			case "/board/list":
-				boardHandler.listBoard();
+				boardListCommand.excute();
 				break;
 			case "/board/detail":
 				boardHandler.detailBoard();
