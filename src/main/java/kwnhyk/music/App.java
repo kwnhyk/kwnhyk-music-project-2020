@@ -4,6 +4,7 @@ package kwnhyk.music;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -36,106 +37,67 @@ public class App {
 	static Scanner keyboard = new Scanner(System.in);
 	static Deque<String> commandStack = new ArrayDeque<>();
 	static Queue<String> commandQueue = new LinkedList<>();
-
+	
 
 
 	public static void main(String[] args) {
 		Prompt prompt = new Prompt(keyboard);
-		ArrayList<MusicInfo> musicList = new ArrayList<>();
-		LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
-		LinkedList<BoardInfo> boardList = new LinkedList<>();
+		HashMap<String,Command> commandMap = new HashMap<>();
 		
-			Command boardAddCommand = new BoardAddCommand(prompt, boardList);
-			Command boardListCommand = new BoardListCommand(boardList);
-		    Command boardDetailCommand = new BoardDetailCommand(prompt, boardList);
-		    Command boardUpdateCommand = new BoardUpdateCommand(prompt, boardList);
-		    Command boardDeleteCommand = new BoardDeleteCommand(prompt, boardList);
-		    Command artistAddCommand = new ArtistAddCommand(prompt,artistList);
-		    Command artistListCommand = new ArtistListCommand(artistList);
-		    Command artistDetailCommand = new ArtistDetailCommand(prompt,artistList);
-		    Command artistDeleteCommand = new ArtistDeleteCommand(prompt,artistList);
-			Command artistUpdateCommand = new ArtistUpdateCommand(prompt,artistList);
-			Command musicAddCommand = new MusicAddCommand(prompt,musicList);
-			Command musicListCommand = new MusicListCommand(musicList);
-			Command musicDetailCommand = new MusicDetailCommand(prompt,musicList);
-			Command musicDeleteCommand = new MusicDeleteCommand(prompt,musicList);
-			Command musicUpdateCommand = new MusicUpdateCommand(prompt,musicList);
+		
+		ArrayList<MusicInfo> musicList = new ArrayList<>();
+		commandMap.put("/music/add",new MusicAddCommand(prompt,musicList));
+		commandMap.put("/music/list",new MusicListCommand(musicList));
+		commandMap.put("/music/detail",new MusicDetailCommand(prompt,musicList));
+		commandMap.put("/music/delete",new MusicDeleteCommand(prompt,musicList));
+		commandMap.put("/music/update",new MusicUpdateCommand(prompt,musicList));
+		LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
+		 commandMap.put("/artist/add", new ArtistAddCommand(prompt, artistList));
+		    commandMap.put("/artist/list", new ArtistListCommand(artistList));
+		    commandMap.put("/artist/detail", new ArtistDetailCommand(prompt, artistList));
+		    commandMap.put("/artist/update", new ArtistUpdateCommand(prompt, artistList));
+		    commandMap.put("/artist/delete", new ArtistDeleteCommand(prompt, artistList));
+		LinkedList<BoardInfo> boardList = new LinkedList<>();
+		commandMap.put("/board/add", new BoardAddCommand(prompt, boardList));
+	    commandMap.put("/board/list", new BoardListCommand(boardList));
+	    commandMap.put("/board/detail", new BoardDetailCommand(prompt, boardList));
+	    commandMap.put("/board/update", new BoardUpdateCommand(prompt, boardList));
+	    commandMap.put("/board/delete", new BoardDeleteCommand(prompt, boardList));
 			
 			
 			String command ;
-
-		do{
-			System.out.print("명령> ");
-			command = keyboard.nextLine();
-			if(command.length() ==0)
-				continue;
-			commandStack.push(command);
-			commandQueue.offer(command);
-			switch (command){
-			case "/music/add":
-			musicAddCommand.excute();
-
-
-				break;
-			case "/music/list":
-			musicListCommand.excute();
-
-
-				break;
-			case "/music/detail":
-			musicDetailCommand.excute();
-				break;
-			case "/music/update":
-			musicUpdateCommand.excute();
-				break;
-			case "/music/delete":
-			musicDeleteCommand.excute();
-				break;
-
-
-			case "/artist/add":
-			artistAddCommand.excute();
-				break;
-			case"/artist/list":
-			artistListCommand.excute();
-				break;
-			case "/artist/detail":
-			artistDetailCommand.excute();
-				break;
-			case "/artist/update":
-			artistUpdateCommand.excute();
-				break;
-			case "/artist/delete":
-			artistDeleteCommand.excute();
-				break;
-			case "/board/add":
-				boardAddCommand.excute();
-				break;
-			case "/board/list":
-				boardListCommand.excute();
-				break;
-			case "/board/detail":
-				boardDetailCommand.excute();
-				break;
-			case "/board/update":
-				boardUpdateCommand.excute();
-				break;
-			case "/board/delete":
-				boardDeleteCommand.excute();
-				break;
-			case"history":
-				printCommandHistory(commandStack.iterator());
-			case"history2":
-				printCommandHistory(commandQueue.iterator());
-			default:
+			while(true) {
+				System.out.print("명령> ");
+				command = keyboard.nextLine();
+				if(command.length() ==0)
+					continue;
+				
 				if(!command.equalsIgnoreCase("quit")){
+				System.out.println("GoodBye!");
+				break;
+				}else if(command.equals("history")) {
+				printCommandHistory(commandStack.iterator());
+				continue;
+				}else if (command.equals("history2")) {
+				printCommandHistory(commandQueue.iterator());
+				continue;
+			}
+			
+				commandStack.push(command);
+				commandQueue.offer(command);
+			
+			
+			Command commandHandler = commandMap.get(command);
+			if(commandHandler!=null) {
+				commandHandler.excute();
+			}	else {
+			
+			
 					System.out.println("실행할 수 없는 명령입니다.");
 
 				}
 			}
-		}while(!command.equalsIgnoreCase("quit"));
-		System.out.println("GoodBye!");
-		keyboard.close();
+			keyboard.close();
 
 	}
 
