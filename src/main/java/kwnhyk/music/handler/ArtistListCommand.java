@@ -4,14 +4,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import kwnhyk.music.domain.ArtistInfo;
-import kwnhyk.music.util.Prompt;
 
 public class ArtistListCommand implements Command{
-	Prompt prompt;
-	List<ArtistInfo> artistList;
-	public ArtistListCommand(Prompt prompt ,List<ArtistInfo> list) {
 
-		this.prompt = prompt;
+	List<ArtistInfo> artistList;
+	public ArtistListCommand(List<ArtistInfo> list) {
+
+		
 		this.artistList = list;
 
 

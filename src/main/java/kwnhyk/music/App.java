@@ -9,14 +9,22 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import kwnhyk.music.Handler.ArtistHandler;
+import kwnhyk.music.Handler.ArtistAddCommand;
+import kwnhyk.music.Handler.ArtistDeleteCommand;
+import kwnhyk.music.Handler.ArtistDetailCommand;
+import kwnhyk.music.Handler.ArtistListCommand;
+import kwnhyk.music.Handler.ArtistUpdateCommand;
 import kwnhyk.music.Handler.BoardAddCommand;
 import kwnhyk.music.Handler.BoardDeleteCommand;
 import kwnhyk.music.Handler.BoardDetailCommand;
 import kwnhyk.music.Handler.BoardListCommand;
 import kwnhyk.music.Handler.BoardUpdateCommand;
 import kwnhyk.music.Handler.Command;
-import kwnhyk.music.Handler.MusicHandler;
+import kwnhyk.music.Handler.MusicAddCommand;
+import kwnhyk.music.Handler.MusicDeleteCommand;
+import kwnhyk.music.Handler.MusicDetailCommand;
+import kwnhyk.music.Handler.MusicListCommand;
+import kwnhyk.music.Handler.MusicUpdateCommand;
 import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.domain.BoardInfo;
 import kwnhyk.music.domain.MusicInfo;
@@ -34,18 +42,27 @@ public class App {
 	public static void main(String[] args) {
 		Prompt prompt = new Prompt(keyboard);
 		ArrayList<MusicInfo> musicList = new ArrayList<>();
-		MusicHandler musicHandler = new MusicHandler(prompt,musicList);
 		LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
-		ArtistHandler artistHandler = new ArtistHandler(prompt,artistList);
 		LinkedList<BoardInfo> boardList = new LinkedList<>();
 		
-		Command boardAddCommand = new BoardAddCommand(prompt, boardList);
-		 Command boardListCommand = new BoardListCommand(boardList);
+			Command boardAddCommand = new BoardAddCommand(prompt, boardList);
+			Command boardListCommand = new BoardListCommand(boardList);
 		    Command boardDetailCommand = new BoardDetailCommand(prompt, boardList);
 		    Command boardUpdateCommand = new BoardUpdateCommand(prompt, boardList);
 		    Command boardDeleteCommand = new BoardDeleteCommand(prompt, boardList);
-
-		String command ;
+		    Command artistAddCommand = new ArtistAddCommand(prompt,artistList);
+		    Command artistListCommand = new ArtistListCommand(artistList);
+		    Command artistDetailCommand = new ArtistDetailCommand(prompt,artistList);
+		    Command artistDeleteCommand = new ArtistDeleteCommand(prompt,artistList);
+			Command artistUpdateCommand = new ArtistUpdateCommand(prompt,artistList);
+			Command musicAddCommand = new MusicAddCommand(prompt,musicList);
+			Command musicListCommand = new MusicListCommand(musicList);
+			Command musicDetailCommand = new MusicDetailCommand(prompt,musicList);
+			Command musicDeleteCommand = new MusicDeleteCommand(prompt,musicList);
+			Command musicUpdateCommand = new MusicUpdateCommand(prompt,musicList);
+			
+			
+			String command ;
 
 		do{
 			System.out.print("명령> ");
@@ -56,40 +73,40 @@ public class App {
 			commandQueue.offer(command);
 			switch (command){
 			case "/music/add":
-				musicHandler.addMusic();
+			musicAddCommand.excute();
 
 
 				break;
 			case "/music/list":
-				musicHandler.listMusic();
+			musicListCommand.excute();
 
 
 				break;
 			case "/music/detail":
-				musicHandler.detailMusic();
+			musicDetailCommand.excute();
 				break;
 			case "/music/update":
-				musicHandler.updateMusic();
+			musicUpdateCommand.excute();
 				break;
 			case "/music/delete":
-				musicHandler.deleteMusic();
+			musicDeleteCommand.excute();
 				break;
 
 
 			case "/artist/add":
-				artistHandler.addArtist();
+			artistAddCommand.excute();
 				break;
 			case"/artist/list":
-				artistHandler.listArtist();
+			artistListCommand.excute();
 				break;
 			case "/artist/detail":
-				artistHandler.detailArtist();
+			artistDetailCommand.excute();
 				break;
 			case "/artist/update":
-				artistHandler.updateArtist();
+			artistUpdateCommand.excute();
 				break;
 			case "/artist/delete":
-				artistHandler.deleteArtist();
+			artistDeleteCommand.excute();
 				break;
 			case "/board/add":
 				boardAddCommand.excute();
@@ -98,13 +115,13 @@ public class App {
 				boardListCommand.excute();
 				break;
 			case "/board/detail":
-				boardHandler.detailBoard();
+				boardDetailCommand.excute();
 				break;
 			case "/board/update":
-				boardHandler.updateBoard();
+				boardUpdateCommand.excute();
 				break;
 			case "/board/delete":
-				boardHandler.deleteBoard();
+				boardDeleteCommand.excute();
 				break;
 			case"history":
 				printCommandHistory(commandStack.iterator());
