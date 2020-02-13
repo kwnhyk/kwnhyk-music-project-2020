@@ -2,18 +2,20 @@
 package kwnhyk.music;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
 
 import kwnhyk.music.Handler.ArtistAddCommand;
 import kwnhyk.music.Handler.ArtistDeleteCommand;
@@ -139,84 +141,43 @@ public class App {
 	}
 	
 	private static void loadMusicData() {
-		File file = new File("./music.csv");
-		FileReader in = null;
-		Scanner dataScan = null;
+		File file = new File("./music.json");
 		
 		
-			try {
-				in = new FileReader(file);
+		
+			try (FileReader in = new FileReader(file)){
+				MusicInfo[] musics = new Gson().fromJson(in,MusicInfo[].class);
+				for(MusicInfo music :musics) {
+					musicList.add(music);
+				}
+				System.out.printf("총%d개의 음악 데이터를 로딩했습니다\n",musicList.size());
 			
-			dataScan = new Scanner(in);
-			int count = 0;
 			
-			while(true) {
-				try {
-				
-				
-				
-				
-				
-				musicList.add(MusicInfo.valueOf(dataScan.nextLine()));
-				count ++;
-				
-				
-				
-				
-			}catch(Exception e) {
-				break;
-			}
-			}
-			System.out.printf("총%d개의 음악 데이터를 로딩했습니다\n",count);
 			
-			}catch (FileNotFoundException e) {
+			}catch (IOException e) {
 			System.out.println("파일 읽기 중 오류 발생!-" + e.getMessage());
-			}finally {
-				try {
-					dataScan.close();
-					
-				}catch(Exception e) {
-					
-				}
-				try {
-					in.close();
-				}catch(Exception e) {
-					
-				}
 			}
+			}
+	
 			
 		
 		
-	}
+	
 	private static void saveMusicData() {
-		File file = new File("./music.csv");
-		FileWriter out = null;
+		File file = new File("./music.json");
 		
 		
-		try {
-			out = new FileWriter(file);
+		try (FileWriter out = new FileWriter(file)){
+			out.write(new Gson().toJson(musicList));
+			System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",musicList.size());
 		
-		int count = 0;
-		for(MusicInfo music : musicList) {
-			
+		
 					
-						out.write(music.toCsvString()+ "\n");
-						count++;
-					
-					
-					
-		}
-		System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",count);
 		
 		
 		}catch (IOException e) {
 				System.out.println("파일쓰기중오류발생"+e.getMessage());
-		}finally {
-			try {
-				out.close();
-			}catch(IOException e) {
-				
-			}
+		}
 			
 		
 				
@@ -225,145 +186,91 @@ public class App {
 		}
 		
 		
-	}
+	
 	
 	private static void loadArtistData() {
-		File file = new File("./artist.csv");
+		File file = new File("./artist.json");
 		
-		FileReader in = null;
-		Scanner dataScan = null;
-		try {
-		in = new FileReader(file);
-		dataScan = new Scanner(in);
-		int count = 0;
 		
-		while(true) {
-			try {
-			
-			
-			artistList.add(ArtistInfo.valueOf(dataScan.nextLine()));
-			count++;
-			
-		}catch(Exception e){
-			break;
-		}
-		}
-		System.out.printf("총%d개의 아티스트 데이터를 로딩\n",count);
+		try(FileReader in = new FileReader(file)) {
+		     // 방법1) JSON ===> List
+		      // Gson json도구 = new Gson();
+		      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
+		      // for (Lesson 수업 : 배열) {
+		      // lessonList.add(수업);
+		      // }
+			/*ArtistInfo[] artists = new Gson().fromJson(in,ArtistInfo[].class);
+			for(ArtistInfo artist : artists) {
+				artistList.add(artist);
+			}
+			*/
+
+		      // 방법2) JSON ===> List
+		      // Gson json도구 = new Gson();
+		      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
+		      // List<Lesson> 읽기전용List구현체 = Arrays.asList(배열);
+		      // lessonList.addAll(읽기전용List구현체);
+
+		      // 위의 코드를 간략히 줄이면 다음과 같다.
+			artistList.addAll(Arrays.asList(new Gson().fromJson(in, ArtistInfo[].class)));
 		
-	}catch(FileNotFoundException e) {
+		System.out.printf("총%d개의 아티스트 데이터를 로딩\n",artistList.size());
+		
+	}catch(IOException e) {
 		System.out.println("파일 읽기 중 오류 발생" +e.getMessage());
 		
-	}finally {
-		try {
-			dataScan.close();
-			
-		}catch(Exception e) {
-			
-		}
-		try {
-			in.close();
-		}catch(Exception e) {
-			
-		}
+	}
 	}
 
 
-	}
+	
 	private static void saveArtistData() {
-		File file = new File("./artist.csv");
-		FileWriter out = null;
-		try {
-		out = new FileWriter(file);
-		int count = 0;
-		for(ArtistInfo artist : artistList) {
-			
-			
-			out.write(artist.toCsvString());
-			count++;
-			
-			
-		}
-		System.out.printf("총%d개의 아티스트 데이터를 저장했습니다\n",count);
+		File file = new File("./artist.json");
+		try(FileWriter out = new FileWriter(file)) {
+		
+		out.write(new Gson().toJson(artistList));
+		
+		System.out.printf("총%d개의 아티스트 데이터를 저장했습니다\n",artistList.size());
 		
 	}catch(IOException e) {
 		System.out.println("파일 쓰기 중 오류 발생" + e.getMessage());
-	}finally {
-		try {
-			out.close();
-		}catch(IOException e) {
-			
-		}
-		
 	}
 		
 	}
+		
+	
 	private static void loadBoardData() {
-		File file = new File("./board.csv");
-		FileReader in = null;
-		Scanner dataScan = null;
+		File file = new File("./board.json");
 		
 		
-		try {
-		in = new FileReader(file);
-		dataScan = new Scanner(in);
-		int count =0;
-		
-		while(true) {
-			try {
-		
-		
-		boardList.add(BoardInfo.valueOf(dataScan.nextLine()));
-		count++;
-		
-		}catch(Exception e) {
-			break;
+		try(FileReader in = new FileReader(file)) {
+		BoardInfo[] boards = new Gson().fromJson(in, BoardInfo[].class);
+		for(BoardInfo board : boards) {
+			boardList.add(board);
 		}
-		}
+		
 			
-		System.out.printf("총%d개의 게시물 데이터를 로딩했습니다\n",count);
+		System.out.printf("총%d개의 게시물 데이터를 로딩했습니다\n",boardList.size());
 		
 		
-	}catch(FileNotFoundException e) {
+	}catch(IOException e) {
 		System.out.println("파일읽기중 오류 발생" + e.getMessage());
-	}finally {
-		try {
-			dataScan.close();
-		}catch(Exception e) {
-			
-		}
-	}try {
-		in.close();
-	}catch(Exception e) {
-		
 	}
 	
 		
 	}
 	private static void saveBoardData() {
-		File file = new File("./board.csv");
-		FileWriter out = null;
-		try {
-		out = new FileWriter(file);
-		int count = 0;
+		File file = new File("./board.json");
+		try(FileWriter out = new FileWriter(file)) {
+		out.write(new Gson().toJson(boardList));
 		
-		for(BoardInfo board : boardList) {
-			
-			out.write(board.toCsvString() + "\n");
-			count++;
-		}
-		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",count);
+		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",boardList.size());
 		
 			
 			
 			
 		}catch(IOException e) {
 			System.out.println("파일 쓰기 중 오류 발생"+ e.getMessage());
-		}finally {
-			try {
-				out.close();
-			}catch(Exception e) {
-				
-			}
 		}
 		
 	}
