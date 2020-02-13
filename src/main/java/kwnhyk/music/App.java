@@ -1,6 +1,12 @@
 //프로젝트: 음악 정보 사이트
 package kwnhyk.music;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -37,27 +43,30 @@ public class App {
 	static Scanner keyboard = new Scanner(System.in);
 	static Deque<String> commandStack = new ArrayDeque<>();
 	static Queue<String> commandQueue = new LinkedList<>();
+	static	ArrayList<MusicInfo> musicList = new ArrayList<>();
 	
+	static	LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
+	static	LinkedList<BoardInfo> boardList = new LinkedList<>();
 
 
 	public static void main(String[] args) {
+		loadMusicData();
+		loadArtistData();
+		loadBoardData();
 		Prompt prompt = new Prompt(keyboard);
 		HashMap<String,Command> commandMap = new HashMap<>();
 		
 		
-		ArrayList<MusicInfo> musicList = new ArrayList<>();
 		commandMap.put("/music/add",new MusicAddCommand(prompt,musicList));
 		commandMap.put("/music/list",new MusicListCommand(musicList));
 		commandMap.put("/music/detail",new MusicDetailCommand(prompt,musicList));
 		commandMap.put("/music/delete",new MusicDeleteCommand(prompt,musicList));
 		commandMap.put("/music/update",new MusicUpdateCommand(prompt,musicList));
-		LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
 		 commandMap.put("/artist/add", new ArtistAddCommand(prompt, artistList));
 		    commandMap.put("/artist/list", new ArtistListCommand(artistList));
 		    commandMap.put("/artist/detail", new ArtistDetailCommand(prompt, artistList));
 		    commandMap.put("/artist/update", new ArtistUpdateCommand(prompt, artistList));
 		    commandMap.put("/artist/delete", new ArtistDeleteCommand(prompt, artistList));
-		LinkedList<BoardInfo> boardList = new LinkedList<>();
 		commandMap.put("/board/add", new BoardAddCommand(prompt, boardList));
 	    commandMap.put("/board/list", new BoardListCommand(boardList));
 	    commandMap.put("/board/detail", new BoardDetailCommand(prompt, boardList));
@@ -72,7 +81,7 @@ public class App {
 				if(command.length() ==0)
 					continue;
 				
-				if(!command.equalsIgnoreCase("quit")){
+				if(command.equalsIgnoreCase("quit")){
 				System.out.println("GoodBye!");
 				break;
 				}else if(command.equals("history")) {
@@ -104,7 +113,12 @@ public class App {
 				}
 			}
 			keyboard.close();
-
+			
+			
+			saveMusicData();
+			saveArtistData();
+			saveBoardData();
+		
 	}
 
 	private static void printCommandHistory(Iterator<String> iterator) {
@@ -124,14 +138,263 @@ public class App {
 		}
 
 	}
+	
+	private static void loadMusicData() {
+		File file = new File("./music.csv");
+		FileReader in = null;
+		Scanner dataScan = null;
+		
+		
+			try {
+				in = new FileReader(file);
+			
+			dataScan = new Scanner(in);
+			int count = 0;
+			
+			while(true) {
+				try {
+				String line = dataScan.nextLine();
+				String[]data = line.split(",");
+				
+				MusicInfo music = new MusicInfo();
+				music.setNo(Integer.parseInt(data[0]));
+				music.setTitle(data[1]);
+				music.setArtist(data[2]);
+				music.setWriter(data[3]);
+				music.setGenre(data[4]);
+				music.setStartDate(Date.valueOf(data[5]));
+				musicList.add(music);
+				count ++;
+				
+				
+				
+				
+			}catch(Exception e) {
+				break;
+			}
+			}
+			System.out.printf("총%d개의 음악 데이터를 로딩했습니다\n",count);
+			
+			}catch (FileNotFoundException e) {
+			System.out.println("파일 읽기 중 오류 발생!-" + e.getMessage());
+			}finally {
+				try {
+					dataScan.close();
+					
+				}catch(Exception e) {
+					
+				}
+				try {
+					in.close();
+				}catch(Exception e) {
+					
+				}
+			}
+			
+		
+		
+	}
+	private static void saveMusicData() {
+		File file = new File("./music.csv");
+		FileWriter out = null;
+		
+		
+		try {
+			out = new FileWriter(file);
+		
+		int count = 0;
+		for(MusicInfo music : musicList) {
+			String line = String.format("%d,%s,%s,%s,%s,%s\n",music.getNo(),
+					music.getTitle(),music.getArtist(),music.getWriter()
+					,music.getGenre(),music.getStartDate());
+					
+						out.write(line);
+						count++;
+					
+					
+					
+		}
+		System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",count);
+		
+		
+		}catch (IOException e) {
+				System.out.println("파일쓰기중오류발생"+e.getMessage());
+		}finally {
+			try {
+				out.close();
+			}catch(IOException e) {
+				
+			}
+			
+		
+				
+					
+					
+		}
+		
+		
+	}
+	
+	private static void loadArtistData() {
+		File file = new File("./artist.csv");
+		
+		FileReader in = null;
+		Scanner dataScan = null;
+		try {
+		in = new FileReader(file);
+		dataScan = new Scanner(in);
+		int count = 0;
+		
+		while(true) {
+			try {
+			String line = dataScan.nextLine();
+			String[] data = line.split(",");
+			
+			ArtistInfo artist = new ArtistInfo();
+			artist.setNo(Integer.parseInt(data[0]));
+			artist.setArtist(data[1]);
+			artist.setRealName(data[2]);
+			artist.setBornDate(Date.valueOf(data[3]));
+			
+			artistList.add(artist);
+			count++;
+			
+		}catch(Exception e){
+			break;
+		}
+		}
+		System.out.printf("총%d개의 아티스트 데이터를 로딩\n",count);
+		
+	}catch(FileNotFoundException e) {
+		System.out.println("파일 읽기 중 오류 발생" +e.getMessage());
+		
+	}finally {
+		try {
+			dataScan.close();
+			
+		}catch(Exception e) {
+			
+		}
+		try {
+			in.close();
+		}catch(Exception e) {
+			
+		}
+	}
 
 
-
-
-
-
-
+	}
+	private static void saveArtistData() {
+		File file = new File("./artist.csv");
+		FileWriter out = null;
+		try {
+		out = new FileWriter(file);
+		int count = 0;
+		for(ArtistInfo artist : artistList) {
+			String line = String.format("%d,%s,%s,%s",artist.getNo()
+					,artist.getArtist(),artist.getRealName()
+					,artist.getBornDate());
+			
+			out.write(line);
+			count++;
+			
+			
+		}
+		System.out.printf("총%d개의 아티스트 데이터를 저장했습니다\n",count);
+		
+	}catch(IOException e) {
+		System.out.println("파일 쓰기 중 오류 발생" + e.getMessage());
+	}finally {
+		try {
+			out.close();
+		}catch(IOException e) {
+			
+		}
+		
+	}
+		
+	}
+	private static void loadBoardData() {
+		File file = new File("./board.csv");
+		FileReader in = null;
+		Scanner dataScan = null;
+		
+		
+		try {
+		in = new FileReader(file);
+		dataScan = new Scanner(in);
+		int count =0;
+		
+		while(true) {
+			try {
+		String line = dataScan.nextLine();
+		String[] data = line.split(",");
+		BoardInfo board = new BoardInfo();
+		board.setNum(Integer.parseInt(data[0]));
+		board.setTitle(data[1]);
+		board.setContents(data[2]);
+		boardList.add(board);
+		count++;
+		
+		}catch(Exception e) {
+			break;
+		}
+		}
+			
+		System.out.printf("총%d개의 게시물 데이터를 로딩했습니다\n",count);
+		
+		
+	}catch(FileNotFoundException e) {
+		System.out.println("파일읽기중 오류 발생" + e.getMessage());
+	}finally {
+		try {
+			dataScan.close();
+		}catch(Exception e) {
+			
+		}
+	}try {
+		in.close();
+	}catch(Exception e) {
+		
+	}
+	
+		
+	}
+	private static void saveBoardData() {
+		File file = new File("./board.csv");
+		FileWriter out = null;
+		try {
+		out = new FileWriter(file);
+		int count = 0;
+		
+		for(BoardInfo board : boardList) {
+			String line = String.format("%d,%s,%s",board.getNum()
+					,board.getTitle(),board.getContents());
+			out.write(line);
+			count++;
+		}
+		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",count);
+		
+			
+			
+			
+		}catch(IOException e) {
+			System.out.println("파일 쓰기 중 오류 발생"+ e.getMessage());
+		}finally {
+			try {
+				out.close();
+			}catch(Exception e) {
+				
+			}
+		}
+		
+	}
+	
 }
+
+
+
+
 
 
 

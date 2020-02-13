@@ -20,7 +20,7 @@ public class BoardListCommand implements Command {
 		while(iterator.hasNext()) {
 			BoardInfo b = iterator.next();
 			
-		System.out.printf("%d %s %s ", 
+		System.out.printf("%d %s %s \n", 
 				b.getNum(), b.getTitle(), b.getContents());
 		
 		
