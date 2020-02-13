@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -153,17 +152,12 @@ public class App {
 			
 			while(true) {
 				try {
-				String line = dataScan.nextLine();
-				String[]data = line.split(",");
 				
-				MusicInfo music = new MusicInfo();
-				music.setNo(Integer.parseInt(data[0]));
-				music.setTitle(data[1]);
-				music.setArtist(data[2]);
-				music.setWriter(data[3]);
-				music.setGenre(data[4]);
-				music.setStartDate(Date.valueOf(data[5]));
-				musicList.add(music);
+				
+				
+				
+				
+				musicList.add(MusicInfo.valueOf(dataScan.nextLine()));
 				count ++;
 				
 				
@@ -204,11 +198,9 @@ public class App {
 		
 		int count = 0;
 		for(MusicInfo music : musicList) {
-			String line = String.format("%d,%s,%s,%s,%s,%s\n",music.getNo(),
-					music.getTitle(),music.getArtist(),music.getWriter()
-					,music.getGenre(),music.getStartDate());
+			
 					
-						out.write(line);
+						out.write(music.toCsvString()+ "\n");
 						count++;
 					
 					
@@ -247,16 +239,9 @@ public class App {
 		
 		while(true) {
 			try {
-			String line = dataScan.nextLine();
-			String[] data = line.split(",");
 			
-			ArtistInfo artist = new ArtistInfo();
-			artist.setNo(Integer.parseInt(data[0]));
-			artist.setArtist(data[1]);
-			artist.setRealName(data[2]);
-			artist.setBornDate(Date.valueOf(data[3]));
 			
-			artistList.add(artist);
+			artistList.add(ArtistInfo.valueOf(dataScan.nextLine()));
 			count++;
 			
 		}catch(Exception e){
@@ -291,11 +276,9 @@ public class App {
 		out = new FileWriter(file);
 		int count = 0;
 		for(ArtistInfo artist : artistList) {
-			String line = String.format("%d,%s,%s,%s",artist.getNo()
-					,artist.getArtist(),artist.getRealName()
-					,artist.getBornDate());
 			
-			out.write(line);
+			
+			out.write(artist.toCsvString());
 			count++;
 			
 			
@@ -327,13 +310,9 @@ public class App {
 		
 		while(true) {
 			try {
-		String line = dataScan.nextLine();
-		String[] data = line.split(",");
-		BoardInfo board = new BoardInfo();
-		board.setNum(Integer.parseInt(data[0]));
-		board.setTitle(data[1]);
-		board.setContents(data[2]);
-		boardList.add(board);
+		
+		
+		boardList.add(BoardInfo.valueOf(dataScan.nextLine()));
 		count++;
 		
 		}catch(Exception e) {
@@ -368,9 +347,8 @@ public class App {
 		int count = 0;
 		
 		for(BoardInfo board : boardList) {
-			String line = String.format("%d,%s,%s",board.getNum()
-					,board.getTitle(),board.getContents());
-			out.write(line);
+			
+			out.write(board.toCsvString() + "\n");
 			count++;
 		}
 		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",count);

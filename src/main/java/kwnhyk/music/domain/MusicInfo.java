@@ -58,5 +58,22 @@ public class MusicInfo {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	public static MusicInfo valueOf(String csv) {
+		String[]data = csv.split(",");
+		MusicInfo music = new MusicInfo();
+		music.setNo(Integer.parseInt(data[0]));
+		music.setTitle(data[1]);
+		music.setArtist(data[2]);
+		music.setWriter(data[3]);
+		music.setGenre(data[4]);
+		music.setStartDate(Date.valueOf(data[5]));
+		return music;
+	}
+	public String toCsvString() {
+		
+		return String.format("%d,%s,%s,%s,%s,%s\n",this.getNo(),
+				this.getTitle(),this.getArtist(),this.getWriter()
+				,this.getGenre(),this.getStartDate());
+	}
 
 }

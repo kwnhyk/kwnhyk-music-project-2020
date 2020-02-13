@@ -29,5 +29,19 @@ public class BoardInfo {
 	public void setNum(int num) {
 		this.num = num;
 	}
+	public static BoardInfo valueOf(String csv) {
+		String[] data = csv.split(",");
+		BoardInfo board = new BoardInfo();
+		board.setNum(Integer.parseInt(data[0]));
+		board.setTitle(data[1]);
+		board.setContents(data[2]);
+		return board;
+		
+	}
+	public String toCsvString() {
+		return String.format("%d,%s,%s",this.getNum()
+				,this.getTitle(),this.getContents());
+		
+	}
 	
 }
