@@ -89,8 +89,14 @@ public class App {
 			
 			Command commandHandler = commandMap.get(command);
 			if(commandHandler!=null) {
+				try {
 				commandHandler.excute();
-			}	else {
+			}	catch(Exception e){
+				System.out.printf("명령어 실행 중 오류 발생:%s\n",e.getMessage());
+			}
+				
+			}
+				else {
 			
 			
 					System.out.println("실행할 수 없는 명령입니다.");
