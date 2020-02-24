@@ -1,7 +1,13 @@
 package kwnhyk.music.domain;
 
-public class BoardInfo {
+import java.io.Serializable;
 
+public class BoardInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String title;
 	private String contents;
 	private int num;

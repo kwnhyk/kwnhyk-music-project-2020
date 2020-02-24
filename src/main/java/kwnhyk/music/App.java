@@ -3,19 +3,18 @@ package kwnhyk.music;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Date;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -46,10 +45,10 @@ public class App {
 	static Scanner keyboard = new Scanner(System.in);
 	static Deque<String> commandStack = new ArrayDeque<>();
 	static Queue<String> commandQueue = new LinkedList<>();
-	static	ArrayList<MusicInfo> musicList = new ArrayList<>();
+	static	List<MusicInfo> musicList = new ArrayList<>();
 	
-	static	LinkedList<ArtistInfo> artistList = new LinkedList<>(); 
-	static	LinkedList<BoardInfo> boardList = new LinkedList<>();
+	static	List<ArtistInfo> artistList = new LinkedList<>(); 
+	static	List<BoardInfo> boardList = new LinkedList<>();
 
 
 	public static void main(String[] args) {
@@ -142,24 +141,16 @@ public class App {
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void loadMusicData() {
-		File file = new File("./music.data");
+		File file = new File("./music.ser");
 		
 		
 		
-			try (DataInputStream in =
-			        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))){
-				int size = in.readInt();
-				for(int i = 0; i <size;i++) {
-					MusicInfo music = new MusicInfo();
-					music.setNo(in.readInt());
-					music.setTitle(in.readUTF());
-					music.setArtist(in.readUTF());
-					music.setGenre(in.readUTF());
-					music.setWriter(in.readUTF());
-					music.setStartDate(Date.valueOf(in.readUTF()));
-					musicList.add(music);
-				}
+			try (ObjectInputStream in =
+			        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))){
+				
+				musicList = (List<MusicInfo>) in.readObject();
 				
 				
 			
@@ -167,7 +158,7 @@ public class App {
 			
 			
 			
-			}catch (IOException e) {
+			}catch (Exception e) {
 			System.out.println("파일 읽기 중 오류 발생!-" + e.getMessage());
 			}
 			}
@@ -177,27 +168,20 @@ public class App {
 		
 	
 	private static void saveMusicData() {
-		File file = new File("./music.data");
+		File file = new File("./music.ser");
 		
 		
-		try (DataOutputStream out =
-		        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-		      out.writeInt(musicList.size());
-		      for (MusicInfo music : musicList) {
-		        out.writeInt(music.getNo());
-		        out.writeUTF(music.getTitle());
-		        out.writeUTF(music.getGenre());
-		        out.writeUTF(music.getArtist());
-		        out.writeUTF(music.getWriter());
-		        out.writeUTF(music.getStartDate().toString());
-		      }
+		try (ObjectOutputStream out =
+		        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+		      out.writeObject(musicList);
+		    
 			System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",musicList.size());
 		
 		
 					
 		
 		
-		}catch (IOException e) {
+		}catch (Exception e) {
 				System.out.println("파일쓰기중오류발생"+e.getMessage());
 		}
 			
@@ -210,22 +194,16 @@ public class App {
 		
 	
 	
+	@SuppressWarnings("unchecked")
 	private static void loadArtistData() {
-		File file = new File("./artist.data");
+		File file = new File("./artist.ser");
 		
 		
-		try(DataInputStream in =
-        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        ArtistInfo artist = new ArtistInfo();
-        artist.setNo(in.readInt());
-        artist.setArtist(in.readUTF());
-        artist.setRealName(in.readUTF());
-       
-        artist.setBornDate(Date.valueOf(in.readUTF()));
-        artistList.add(artist);
-      } 
+		try(ObjectInputStream in =
+		        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+     
+        artistList = (List<ArtistInfo>) in.readObject();
+      
       
 		     // 방법1) JSON ===> List
 		      // Gson json도구 = new Gson();
@@ -250,7 +228,7 @@ public class App {
 		
 		System.out.printf("총%d개의 아티스트 데이터를 로딩\n",artistList.size());
 		
-	}catch(IOException e) {
+	}catch(Exception e) {
 		System.out.println("파일 읽기 중 오류 발생" +e.getMessage());
 		
 	}
@@ -259,72 +237,54 @@ public class App {
 
 	
 	private static void saveArtistData() {
-		File file = new File("./artist.data");
-		try(DataOutputStream out =
-        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeInt(artistList.size());
-      for (ArtistInfo artist : artistList) {
-        out.writeInt(artist.getNo());
-        out.writeUTF(artist.getArtist());
-        out.writeUTF(artist.getRealName());
-        out.writeUTF(artist.getBornDate().toString());
+		File file = new File("./artist.ser");
+		try(ObjectOutputStream out =
+		        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeObject(artistList);
+    
 		//out.write(new Gson().toJson(artistList));
-      }
+      
 		System.out.printf("총%d개의 아티스트 데이터를 저장했습니다\n",artistList.size());
 		
-	}catch(IOException e) {
+	}catch(Exception e) {
 		System.out.println("파일 쓰기 중 오류 발생" + e.getMessage());
 	}
 		
 	}
 		
 	
+	@SuppressWarnings("unchecked")
 	private static void loadBoardData() {
-		File file = new File("./board.data");
+		File file = new File("./board.ser");
 		
 		
-		try(DataInputStream in =
-        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        BoardInfo board = new BoardInfo();
-        board.setNum(in.readInt());
-        board.setTitle(in.readUTF());
-        board.setContents(in.readUTF());
-        
-        String contents = in.readUTF();
-        if (contents.length() > 0) {
-          board.setContents(contents);
-        }
-        boardList.add(board);
-		}
+		try(ObjectInputStream in =
+		        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+    
+      boardList = (List<BoardInfo>) in.readObject();
 		
 			
 		System.out.printf("총%d개의 게시물 데이터를 로딩했습니다\n",boardList.size());
 		
 		
-	}catch(IOException e) {
+	}catch(Exception e) {
 		System.out.println("파일읽기중 오류 발생" + e.getMessage());
 	}
 	
 		
 	}
 	private static void saveBoardData() {
-		File file = new File("./board.data");
-		try(DataOutputStream out =
-        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeInt(boardList.size());
-      for (BoardInfo board : boardList) {
-        out.writeInt(board.getNum());
-        out.writeUTF(board.getTitle());
-        out.writeUTF(board.getContents() == null ? "" : board.getContents());
-      }
+		File file = new File("./board.ser");
+		try(ObjectOutputStream out =
+		        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeObject(boardList);
+      
 		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",boardList.size());
 		
 			
 			
 			
-		}catch(IOException e) {
+		}catch(Exception e) {
 			System.out.println("파일 쓰기 중 오류 발생"+ e.getMessage());
 		}
 		
