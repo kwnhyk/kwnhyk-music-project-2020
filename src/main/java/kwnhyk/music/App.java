@@ -1,6 +1,8 @@
 //프로젝트: 음악 정보 사이트
 package kwnhyk.music;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -145,7 +147,7 @@ public class App {
 		
 		
 		
-			try (FileReader in = new FileReader(file)){
+			try (BufferedReader in = new BufferedReader(new FileReader(file))){
 				MusicInfo[] musics = new Gson().fromJson(in,MusicInfo[].class);
 				for(MusicInfo music :musics) {
 					musicList.add(music);
@@ -167,7 +169,7 @@ public class App {
 		File file = new File("./music.json");
 		
 		
-		try (FileWriter out = new FileWriter(file)){
+		try (BufferedWriter out = new BufferedWriter(new FileWriter(file))){
 			out.write(new Gson().toJson(musicList));
 			System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",musicList.size());
 		
@@ -192,7 +194,7 @@ public class App {
 		File file = new File("./artist.json");
 		
 		
-		try(FileReader in = new FileReader(file)) {
+		try(BufferedReader in = new BufferedReader(new FileReader(file))) {
 		     // 방법1) JSON ===> List
 		      // Gson json도구 = new Gson();
 		      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
@@ -226,7 +228,7 @@ public class App {
 	
 	private static void saveArtistData() {
 		File file = new File("./artist.json");
-		try(FileWriter out = new FileWriter(file)) {
+		try(BufferedWriter out = new BufferedWriter( new FileWriter(file))) {
 		
 		out.write(new Gson().toJson(artistList));
 		
@@ -243,7 +245,7 @@ public class App {
 		File file = new File("./board.json");
 		
 		
-		try(FileReader in = new FileReader(file)) {
+		try(BufferedReader in = new BufferedReader(new FileReader(file))) {
 		BoardInfo[] boards = new Gson().fromJson(in, BoardInfo[].class);
 		for(BoardInfo board : boards) {
 			boardList.add(board);
@@ -261,7 +263,7 @@ public class App {
 	}
 	private static void saveBoardData() {
 		File file = new File("./board.json");
-		try(FileWriter out = new FileWriter(file)) {
+		try(BufferedWriter out = new BufferedWriter( new FileWriter(file))) {
 		out.write(new Gson().toJson(boardList));
 		
 		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",boardList.size());
