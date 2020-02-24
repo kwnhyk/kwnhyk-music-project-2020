@@ -12,11 +12,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 import kwnhyk.music.Handler.ArtistAddCommand;
 import kwnhyk.music.Handler.ArtistDeleteCommand;
@@ -34,6 +36,7 @@ import kwnhyk.music.Handler.MusicDeleteCommand;
 import kwnhyk.music.Handler.MusicDetailCommand;
 import kwnhyk.music.Handler.MusicListCommand;
 import kwnhyk.music.Handler.MusicUpdateCommand;
+import kwnhyk.music.context.ApplicationContextListener;
 import kwnhyk.music.domain.ArtistInfo;
 import kwnhyk.music.domain.BoardInfo;
 import kwnhyk.music.domain.MusicInfo;
@@ -42,16 +45,40 @@ import kwnhyk.music.util.Prompt;
 
 
 public class App {
-	static Scanner keyboard = new Scanner(System.in);
-	static Deque<String> commandStack = new ArrayDeque<>();
-	static Queue<String> commandQueue = new LinkedList<>();
-	static	List<MusicInfo> musicList = new ArrayList<>();
+	 Scanner keyboard = new Scanner(System.in);
+	 Deque<String> commandStack = new ArrayDeque<>();
+	 Queue<String> commandQueue = new LinkedList<>();
+		List<MusicInfo> musicList = new ArrayList<>();
 	
-	static	List<ArtistInfo> artistList = new LinkedList<>(); 
-	static	List<BoardInfo> boardList = new LinkedList<>();
+		List<ArtistInfo> artistList = new LinkedList<>(); 
+		List<BoardInfo> boardList = new LinkedList<>();
+		Set<ApplicationContextListener> listeners = new HashSet<>();
+		 public void addApplicationContextListener(ApplicationContextListener listener) {
+			    listeners.add(listener);
+			  }
 
+			  // 옵저버를 제거하는 메서드이다.
+			  public void removeApplicationContextListener(ApplicationContextListener listener) {
+			    listeners.remove(listener);
+			  }
 
-	public static void main(String[] args) {
+			  // 애플리케이션이 시작되면, 등록된 리스너에게 알린다.
+			  private void notifyApplicationInitialized() {
+			    for (ApplicationContextListener listener : listeners) {
+			      listener.contextInitialized();
+			    }
+			  }
+
+			  // 애플리케이션이 종료되면, 등록된 리스너에게 알린다.
+			  private void notifyApplicationDestroyed() {
+			    for (ApplicationContextListener listener : listeners) {
+			      listener.contextDestroyed();
+			    }
+			  }
+
+	public  void service() {
+		notifyApplicationInitialized();
+
 		loadMusicData();
 		loadArtistData();
 		loadBoardData();
@@ -120,10 +147,12 @@ public class App {
 			saveMusicData();
 			saveArtistData();
 			saveBoardData();
+			
+			 notifyApplicationDestroyed();
 		
 	}
 
-	private static void printCommandHistory(Iterator<String> iterator) {
+	private  void printCommandHistory(Iterator<String> iterator) {
 		
 		int count = 0;
 		while(iterator.hasNext()) {
@@ -142,7 +171,7 @@ public class App {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void loadMusicData() {
+	private  void loadMusicData() {
 		File file = new File("./music.ser");
 		
 		
@@ -167,7 +196,7 @@ public class App {
 		
 		
 	
-	private static void saveMusicData() {
+	private  void saveMusicData() {
 		File file = new File("./music.ser");
 		
 		
@@ -195,7 +224,7 @@ public class App {
 	
 	
 	@SuppressWarnings("unchecked")
-	private static void loadArtistData() {
+	private  void loadArtistData() {
 		File file = new File("./artist.ser");
 		
 		
@@ -236,7 +265,7 @@ public class App {
 
 
 	
-	private static void saveArtistData() {
+	private  void saveArtistData() {
 		File file = new File("./artist.ser");
 		try(ObjectOutputStream out =
 		        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
@@ -254,7 +283,7 @@ public class App {
 		
 	
 	@SuppressWarnings("unchecked")
-	private static void loadBoardData() {
+	private  void loadBoardData() {
 		File file = new File("./board.ser");
 		
 		
@@ -273,7 +302,7 @@ public class App {
 	
 		
 	}
-	private static void saveBoardData() {
+	private  void saveBoardData() {
 		File file = new File("./board.ser");
 		try(ObjectOutputStream out =
 		        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
@@ -290,11 +319,16 @@ public class App {
 		
 	}
 	
+
+
+
+	public static void main(String[] args) {
+	App app = new App();
+	app.service();
+	
 }
 
-
-
-
+}
 
 
 
