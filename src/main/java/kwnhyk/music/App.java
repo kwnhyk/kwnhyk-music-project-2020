@@ -1,23 +1,23 @@
 //프로젝트: 음악 정보 사이트
 package kwnhyk.music;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-
-import com.google.gson.Gson;
 
 import kwnhyk.music.Handler.ArtistAddCommand;
 import kwnhyk.music.Handler.ArtistDeleteCommand;
@@ -143,15 +143,26 @@ public class App {
 	}
 	
 	private static void loadMusicData() {
-		File file = new File("./music.json");
+		File file = new File("./music.data");
 		
 		
 		
-			try (BufferedReader in = new BufferedReader(new FileReader(file))){
-				MusicInfo[] musics = new Gson().fromJson(in,MusicInfo[].class);
-				for(MusicInfo music :musics) {
+			try (DataInputStream in =
+			        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))){
+				int size = in.readInt();
+				for(int i = 0; i <size;i++) {
+					MusicInfo music = new MusicInfo();
+					music.setNo(in.readInt());
+					music.setTitle(in.readUTF());
+					music.setArtist(in.readUTF());
+					music.setGenre(in.readUTF());
+					music.setWriter(in.readUTF());
+					music.setStartDate(Date.valueOf(in.readUTF()));
 					musicList.add(music);
 				}
+				
+				
+			
 				System.out.printf("총%d개의 음악 데이터를 로딩했습니다\n",musicList.size());
 			
 			
@@ -166,11 +177,20 @@ public class App {
 		
 	
 	private static void saveMusicData() {
-		File file = new File("./music.json");
+		File file = new File("./music.data");
 		
 		
-		try (BufferedWriter out = new BufferedWriter(new FileWriter(file))){
-			out.write(new Gson().toJson(musicList));
+		try (DataOutputStream out =
+		        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+		      out.writeInt(musicList.size());
+		      for (MusicInfo music : musicList) {
+		        out.writeInt(music.getNo());
+		        out.writeUTF(music.getTitle());
+		        out.writeUTF(music.getGenre());
+		        out.writeUTF(music.getArtist());
+		        out.writeUTF(music.getWriter());
+		        out.writeUTF(music.getStartDate().toString());
+		      }
 			System.out.printf("총 %d개의 음악 데이터를 저장했습니다.\n",musicList.size());
 		
 		
@@ -191,15 +211,27 @@ public class App {
 	
 	
 	private static void loadArtistData() {
-		File file = new File("./artist.json");
+		File file = new File("./artist.data");
 		
 		
-		try(BufferedReader in = new BufferedReader(new FileReader(file))) {
+		try(DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        ArtistInfo artist = new ArtistInfo();
+        artist.setNo(in.readInt());
+        artist.setArtist(in.readUTF());
+        artist.setRealName(in.readUTF());
+       
+        artist.setBornDate(Date.valueOf(in.readUTF()));
+        artistList.add(artist);
+      } 
+      
 		     // 방법1) JSON ===> List
 		      // Gson json도구 = new Gson();
-		      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
-		      // for (Lesson 수업 : 배열) {
-		      // lessonList.add(수업);
+		      // music[] 배열 = json도구.fromJson(in, music[].class);
+		      // for (music 수업 : 배열) {
+		      // musicList.add(수업);
 		      // }
 			/*ArtistInfo[] artists = new Gson().fromJson(in,ArtistInfo[].class);
 			for(ArtistInfo artist : artists) {
@@ -209,12 +241,12 @@ public class App {
 
 		      // 방법2) JSON ===> List
 		      // Gson json도구 = new Gson();
-		      // Lesson[] 배열 = json도구.fromJson(in, Lesson[].class);
-		      // List<Lesson> 읽기전용List구현체 = Arrays.asList(배열);
-		      // lessonList.addAll(읽기전용List구현체);
+		      // music[] 배열 = json도구.fromJson(in, music[].class);
+		      // List<music> 읽기전용List구현체 = Arrays.asList(배열);
+		      // musicList.addAll(읽기전용List구현체);
 
 		      // 위의 코드를 간략히 줄이면 다음과 같다.
-			artistList.addAll(Arrays.asList(new Gson().fromJson(in, ArtistInfo[].class)));
+			//artistList.addAll(Arrays.asList(new Gson().fromJson(in, ArtistInfo[].class)));
 		
 		System.out.printf("총%d개의 아티스트 데이터를 로딩\n",artistList.size());
 		
@@ -227,11 +259,17 @@ public class App {
 
 	
 	private static void saveArtistData() {
-		File file = new File("./artist.json");
-		try(BufferedWriter out = new BufferedWriter( new FileWriter(file))) {
-		
-		out.write(new Gson().toJson(artistList));
-		
+		File file = new File("./artist.data");
+		try(DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeInt(artistList.size());
+      for (ArtistInfo artist : artistList) {
+        out.writeInt(artist.getNo());
+        out.writeUTF(artist.getArtist());
+        out.writeUTF(artist.getRealName());
+        out.writeUTF(artist.getBornDate().toString());
+		//out.write(new Gson().toJson(artistList));
+      }
 		System.out.printf("총%d개의 아티스트 데이터를 저장했습니다\n",artistList.size());
 		
 	}catch(IOException e) {
@@ -242,13 +280,23 @@ public class App {
 		
 	
 	private static void loadBoardData() {
-		File file = new File("./board.json");
+		File file = new File("./board.data");
 		
 		
-		try(BufferedReader in = new BufferedReader(new FileReader(file))) {
-		BoardInfo[] boards = new Gson().fromJson(in, BoardInfo[].class);
-		for(BoardInfo board : boards) {
-			boardList.add(board);
+		try(DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        BoardInfo board = new BoardInfo();
+        board.setNum(in.readInt());
+        board.setTitle(in.readUTF());
+        board.setContents(in.readUTF());
+        
+        String contents = in.readUTF();
+        if (contents.length() > 0) {
+          board.setContents(contents);
+        }
+        boardList.add(board);
 		}
 		
 			
@@ -262,10 +310,15 @@ public class App {
 		
 	}
 	private static void saveBoardData() {
-		File file = new File("./board.json");
-		try(BufferedWriter out = new BufferedWriter( new FileWriter(file))) {
-		out.write(new Gson().toJson(boardList));
-		
+		File file = new File("./board.data");
+		try(DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeInt(boardList.size());
+      for (BoardInfo board : boardList) {
+        out.writeInt(board.getNum());
+        out.writeUTF(board.getTitle());
+        out.writeUTF(board.getContents() == null ? "" : board.getContents());
+      }
 		System.out.printf("총 %d개의 게시물 데이터를 저장했습니다\n",boardList.size());
 		
 			
